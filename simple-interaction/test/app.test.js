@@ -1,7 +1,7 @@
 const createApp = require('./support').createApp
 const path = require('path')
 
-describe('Simple interaction', function() {
+describe('App', function() {
   const h1 = element(by.css('h1'))
 
   let server
