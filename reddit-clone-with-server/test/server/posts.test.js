@@ -161,4 +161,32 @@ describe("/api/posts", () => {
 
   })
 
+  describe("DELETE /api/posts/:id", () => {
+
+    let post
+
+    beforeEach(() => {
+      return db('posts')
+        .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+        .returning('*')
+        .then((result) => post = result[0])
+    })
+
+    it("deletes the post", () => {
+      return db('posts').count().then((count) => {
+        return chai.request(app)
+          .delete(`/api/posts/${post.id}`)
+          .then((res) => {
+            expect(res).to.have.status(200)
+
+            return db('posts').count().then((newCount) => {
+              expect(parseInt(newCount[0].count, 10)).to.eq(parseInt(count[0].count, 10) - 1)
+            })
+          })
+          .catch((err) => {throw err})
+      })
+    })
+
+  })
+
 })
