@@ -1,21 +1,4 @@
-const createApp = require('./support').createApp
-const path = require('path')
-
 describe('App', function() {
-  const h1 = element(by.css('h1'))
-
-  let server
-
-  beforeAll(function (done) {
-    const app = createApp()
-
-    server = app.listen(0, function () {
-      browser.baseUrl = `http://localhost:${server.address().port}`
-      done()
-    })
-  })
-
-  afterAll(() => server.close())
 
   beforeEach(() => browser.get(`/`))
 
