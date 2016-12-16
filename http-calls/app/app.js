@@ -1,11 +1,13 @@
 const express = require('express')
 const path = require('path')
-const logger = require('morgan')
 const bodyParser = require('body-parser')
-
 const app = express()
 
-app.use(logger('dev'))
+if (process.env.NODE_ENV !== 'test') {
+  const logger = require('morgan')
+  app.use(logger('dev'))
+}
+
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, '/../', 'node_modules')))
@@ -13,7 +15,7 @@ app.use(express.static(path.join(__dirname, '/../', 'node_modules')))
 app.use('/api/expenses', require('./routes/expenses'))
 
 app.use('*', function(req, res, next) {
-  res.sendFile('index.html', {root: __dirname + '/../'})
+  res.sendFile('index.html', {root: path.join(__dirname, 'public')})
 })
 
 app.use(function(req, res, next) {

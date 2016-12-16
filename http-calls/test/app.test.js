@@ -1,40 +1,42 @@
-const createApp = require('./support').createApp
-const path = require('path')
-
 describe('App', function() {
-  const h1 = element(by.css('h1'))
-
-  let server
-
-  beforeAll(function (done) {
-    const app = createApp()
-
-    server = app.listen(0, function () {
-      browser.baseUrl = `http://localhost:${server.address().port}`
-      done()
-    })
+  beforeEach((done) => {
+    browser.get(`/`)
+    require('../app/db')('expenses').del().then(() => done())
   })
 
-  afterAll(() => server.close())
+  it('can add expenses', function() {
+    element(by.model('$ctrl.expense.category')).sendKeys('Flyers')
+    element(by.model('$ctrl.expense.amount')).sendKeys('34.67')
+    element(by.buttonText('Add Expense')).click()
 
-  beforeEach(() => browser.get(`/`))
+    // check that the expense was added to the DOM
+    expect(element.all(by.repeater('expense in $ctrl.expenses')).count()).toEqual(1)
+    // check that the expense was persisted
+    browser.get(`/`)
+    expect(element.all(by.repeater('expense in $ctrl.expenses')).count()).toEqual(1)
 
-  it('can manage houses', function() {
-    expect(element.all(by.repeater('house in $ctrl.houses')).count()).toEqual(1)
+    element(by.model('$ctrl.expense.category')).sendKeys('Signs')
+    element(by.model('$ctrl.expense.amount')).sendKeys('4.45')
+    element(by.buttonText('Add Expense')).click()
+    expect(element.all(by.repeater('expense in $ctrl.expenses')).count()).toEqual(2)
 
-    element(by.linkText('Add House')).click()
-    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/houses/new");
+    element(by.cssContainingText('tr', 'Flyers')).element(by.linkText('edit')).click()
+    expect(element(by.model('$ctrl.editingExpense.category')).getAttribute('value')).toEqual("Flyers");
+    expect(element(by.model('$ctrl.editingExpense.amount')).getAttribute('value')).toEqual("34.67");
 
-    element(by.model('$ctrl.house.name')).sendKeys('Room with a view')
-    element(by.model('$ctrl.house.address')).sendKeys('10-25 Main St')
-    element(by.buttonText('Create House')).click()
-    expect(browser.getCurrentUrl()).toMatch("/houses/\\d");
+    element(by.model('$ctrl.editingExpense.category')).sendKeys('!!')
+    element(by.model('$ctrl.editingExpense.amount')).clear()
+    element(by.model('$ctrl.editingExpense.amount')).sendKeys('55.55')
+    element(by.buttonText('Update Expense')).click()
 
-    element(by.linkText('Return Home')).click()
-    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/");
+    expect(element(by.cssContainingText('tr', 'Flyers!!')).getText()).toMatch(/Flyers!!/)
+    browser.get(`/`)
+    expect(element(by.cssContainingText('tr', 'Flyers!!')).getText()).toMatch(/Flyers!!/)
 
-    element(by.linkText('Room with a view')).click()
-    expect(browser.getCurrentUrl()).toMatch("/houses/\\d");
+    element(by.cssContainingText('tr', 'Flyers!!')).element(by.linkText('delete')).click()
+    expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
+    browser.get(`/`)
+    expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
   })
 
 })
