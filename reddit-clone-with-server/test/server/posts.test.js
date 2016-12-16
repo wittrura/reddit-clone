@@ -7,8 +7,7 @@ const db = require('../../app/db')
 
 describe("/api/posts", () => {
 
-  // cascades to posts and comments
-  before(() => {
+  beforeEach(() => {
     return Promise.all([
         db('comments').del(),
         db('posts').del(),
@@ -18,7 +17,20 @@ describe("/api/posts", () => {
   describe("GET /api/posts", () => {
 
     beforeEach(() => {
-      return db('posts').insert({title: "Foo", body: "Bar", author: 'Alexander'})
+      return db('posts')
+        .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+        .returning('*')
+        .then(posts => posts[0])
+        .then(post => {
+          return db('comments')
+            .insert({post_id: post.id, content: 'Firsties'})
+            .then( () => post )
+        })
+        .then(post => {
+          return db('comments')
+            .insert({post_id: post.id, content: 'Secondz'})
+            .then( () => post )
+        })
     })
 
     it("returns all posts", () => {
@@ -32,6 +44,9 @@ describe("/api/posts", () => {
           expect(res.body[0]).to.have.property("author")
           expect(res.body[0]).to.have.property("vote_count")
           expect(res.body[0]).to.have.property("created_at")
+
+          const comments = res.body[0].comments
+          expect(comments.length).to.eq(2)
         })
         .catch((err) => {throw err})
     })

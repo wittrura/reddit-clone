@@ -4,7 +4,21 @@ const knex = require('../db')
 
 router.get('/', (req, res, next) => {
   knex('posts')
-    .then(posts => res.json(posts))
+    .then(posts => {
+      return knex('comments')
+        .whereIn('post_id', posts.map(p => p.id))
+        .then((comments) => {
+          const commentsByPostId = comments.reduce((result, comment) => {
+            result[comment.post_id] = result[comment.post_id] || []
+            result[comment.post_id].push(comment)
+            return result
+          }, {})
+          posts.forEach(post => {
+            post.comments = commentsByPostId[post.id] || []
+          })
+          res.json(posts)
+        })
+    })
     .catch(err => next(err))
 })
 
@@ -37,7 +51,7 @@ router.delete('/:id', (req, res, next) => {
   knex('posts')
     .del()
     .where({id: req.params.id})
-    .then(posts => res.end())
+    .then(() => res.end())
     .catch(err => next(err))
 })
 
