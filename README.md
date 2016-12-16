@@ -19,3 +19,11 @@ Build a simple CRUD app with `$http`
 **[ui-router fundamentals](./ui-router-fundamentals/README.md)**
 
 Add `ui-router` to a project, and work with `ui-sref` and `$state.go()`
+
+## Misc Project Descriptions
+
+- [Class creator app](./further-practice/class-creator-app.md)
+
+## Reference
+
+Everything in karma-examples is an example of how to write an Angular 1 unit test.

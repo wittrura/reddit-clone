@@ -1,7 +1,5 @@
 # Class Creator Application
 
-We're going to challenge your understanding of Controllers, `$scope`, and Angular overall with the following application.
-
 ![Imgur](http://i.imgur.com/amA9PRw.png)
 
 [Look here](https://bwreid.github.io/class-creator-app/) for a deployed version of this application.
