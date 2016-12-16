@@ -3,13 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Angular Drill</title>
+    <base href="/">
   </head>
   <body>
 
-    <expenses></expenses>
+    <ui-view></ui-view>
 
     <script src="/angular/angular.min.js"></script>
-    <script src="/js/app.module.js"></script>
-    <script src="/js/expenses.component.js"></script>
+    <script src="/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/js/app/app.module.js"></script>
+    <script src="/js/app/app.config.js"></script>
+    <script src="/js/app/app.component.js"></script>
+    <script src="/js/posts/posts.component.js"></script>
   </body>
 </html>

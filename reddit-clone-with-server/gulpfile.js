@@ -12,6 +12,7 @@ gulp.task('browser-sync', ['nodemon'], function() {
     files: ['app/public/**/*.*'],
     browser: 'google chrome',
     port: 7000,
+		// online: true,
 	})
 })
 
