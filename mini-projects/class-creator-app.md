@@ -6,19 +6,6 @@ We're going to challenge your understanding of Controllers, `$scope`, and Angula
 
 [Look here](https://bwreid.github.io/class-creator-app/) for a deployed version of this application.
 
-### Entry Ticket
-
-You should have completed the following lessons inside of Unit 1 before starting on this project:
-
-* [Intro and Setup](/Unit-1/01-intro-and-setup.md)
-* [Data Binding](/Unit-1/02-data-binding.md)
-* [Angular MVC](/Unit-1/03-angular-mvc.md)
-* [Expressions and Filters](/Unit-1/04-expressions-and-filters.md)
-* [Built-In Directives](/Unit-1/05-built-in-directives.md)
-* [Intro to Controllers](/Unit-1/06-intro-to-controllers.md)
-* [Scope](/Unit-1/07-intro-to-scope.md)
-* [Angular Events](/Unit-1/08-intro-to-events.md)
-
 ### Class Listing
 
 For the class listing (left-hand side), you should see a list of classes with the associated students enrolled in each class. When you click on a `+` or `-` next to each student, the grade will increase or decrease by 1.
