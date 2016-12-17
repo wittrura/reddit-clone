@@ -4,7 +4,11 @@
 
 <ul class="nav nav-pills">
   <li role="presentation" class="active">
-    <input class="form-control" ng-model="search">
+    <form class="navbar-form search-form">
+      <div class="form-group">
+        <input type="search" class="form-control input-sm" placeholder="Filter" ng-model="search">
+      </div>
+    </form>
   </li>
   <li class="dropdown" ng-init="sort='-vote_count'; sortName='Votes'">
     <a href="#"

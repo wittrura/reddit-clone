@@ -5,3 +5,7 @@
 [ng-click] {
   cursor: pointer;
 }
+
+.search-form {
+  margin-top: 3px;
+}
