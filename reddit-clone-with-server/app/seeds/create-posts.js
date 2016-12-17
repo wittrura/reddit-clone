@@ -21,9 +21,9 @@ exports.seed = function(knex, Promise) {
     .then(() => knex('posts').del())
     .then(function () {
       return Promise.all([
-        createPost('A poem from me', text1, 'Ironic Irma'),
-        createPost('Oh poem my poem', text2, 'Emo Emma'),
-        createPost("It's all about me", text3, 'Hipster Henry'),
+        createPost('A poem from me', text1, 'Ironic Irma', 'https://images.pexels.com/photos/211050/pexels-photo-211050.jpeg?h=350&auto=compress'),
+        createPost('Oh poem my poem', text2, 'Emo Emma', 'https://images.pexels.com/photos/1994/red-vintage-shoes-sport.jpg?h=350&auto=compress'),
+        createPost("It's all about me", text3, 'Hipster Henry', 'https://images.pexels.com/photos/4787/feet-hipster-longboard-skateboard.jpg?h=350&auto=compress'),
       ])
     })
     .then(function (postIds) {
@@ -34,9 +34,9 @@ exports.seed = function(knex, Promise) {
       ])
     })
 
-  function createPost(title, body, author) {
+  function createPost(title, body, author, image_url) {
     return knex('posts')
-      .insert({title, body, author})
+      .insert({title, body, author, image_url})
       .returning('id')
       .then(ids => ids[0])
   }

@@ -15,7 +15,7 @@ describe("/api/posts/:post_id/comments", () => {
         db('posts').del(),
       ]).then(function () {
         return db('posts')
-          .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+          .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: 'foo.jpg'})
           .returning('*')
           .then((result) => post = result[0])
       })

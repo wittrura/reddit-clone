@@ -18,7 +18,7 @@ describe("/api/posts", () => {
 
     beforeEach(() => {
       return db('posts')
-        .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+        .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: 'foo.jpg'})
         .returning('*')
         .then(posts => posts[0])
         .then(post => {
@@ -43,6 +43,7 @@ describe("/api/posts", () => {
           expect(res.body[0]).to.have.property("body")
           expect(res.body[0]).to.have.property("author")
           expect(res.body[0]).to.have.property("vote_count")
+          expect(res.body[0]).to.have.property("image_url")
           expect(res.body[0]).to.have.property("created_at")
 
           const comments = res.body[0].comments
@@ -59,7 +60,7 @@ describe("/api/posts", () => {
       return db('posts').count().then((count) => {
         return chai.request(app)
           .post('/api/posts')
-          .send({ title: 'post title', body: 'post text', author: 'some author' })
+          .send({ title: 'post title', body: 'post text', author: 'some author', image_url: "image.jpg" })
           .then((res) => {
             expect(res).to.have.status(200)
             expect(res.body.title).to.eq("post title")
@@ -88,6 +89,7 @@ describe("/api/posts", () => {
               {field: "title", messages: ["cannot be blank"]},
               {field: "body", messages: ["cannot be blank"]},
               {field: "author", messages: ["cannot be blank"]},
+              {field: "image_url", messages: ["cannot be blank"]},
             ])
 
             return db('posts').count().then((newCount) => {
@@ -106,7 +108,7 @@ describe("/api/posts", () => {
 
     beforeEach(() => {
       return db('posts')
-        .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+        .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: 'foo.jpg'})
         .returning('*')
         .then((result) => post = result[0])
     })
@@ -133,7 +135,7 @@ describe("/api/posts", () => {
 
     beforeEach(() => {
       return db('posts')
-        .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+        .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: "image.jpg"})
         .returning('*')
         .then((result) => post = result[0])
     })
@@ -141,12 +143,13 @@ describe("/api/posts", () => {
     it("updates the post", () => {
       return chai.request(app)
         .patch(`/api/posts/${post.id}`)
-        .send({ title: 'post title', body: 'post text', author: 'some author', vote_count: 1 })
+        .send({ title: 'post title', body: 'post text', author: 'some author', vote_count: 1, image_url: "other.jpg" })
         .then((res) => {
           expect(res).to.have.status(200)
           expect(res.body.title).to.eq("post title")
           expect(res.body.body).to.eq("post text")
           expect(res.body.author).to.eq("some author")
+          expect(res.body.image_url).to.eq("other.jpg")
           expect(res.body.vote_count).to.eq(0)
           expect(res.body.id).to.eq(post.id)
         })
@@ -164,6 +167,7 @@ describe("/api/posts", () => {
             {field: "title", messages: ["cannot be blank"]},
             {field: "body", messages: ["cannot be blank"]},
             {field: "author", messages: ["cannot be blank"]},
+            {field: "image_url", messages: ["cannot be blank"]},
           ])
 
           return db('posts').where({id: post.id}).first().then(post => {
@@ -182,7 +186,7 @@ describe("/api/posts", () => {
 
     beforeEach(() => {
       return db('posts')
-        .insert({title: "Foo", body: "Bar", author: 'Alexander'})
+        .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: 'image.jpg'})
         .returning('*')
         .then((result) => post = result[0])
     })
@@ -200,6 +204,52 @@ describe("/api/posts", () => {
           })
           .catch((err) => {throw err})
       })
+    })
+
+  })
+
+  describe("POST /api/posts/:id/votes", () => {
+
+    let post
+
+    beforeEach(() => {
+      return db('posts')
+        .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: "image.jpg", vote_count: 5})
+        .returning('*')
+        .then((result) => post = result[0])
+    })
+
+    it("increases the vote count", () => {
+      return chai.request(app)
+        .post(`/api/posts/${post.id}/votes`)
+        .then((res) => {
+          expect(res).to.have.status(200)
+          expect(res.body.vote_count).to.eq(6)
+        })
+        .catch((err) => {throw err})
+    })
+
+  })
+
+  describe("DELETE /api/posts/:id/votes", () => {
+
+    let post
+
+    beforeEach(() => {
+      return db('posts')
+        .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: "image.jpg", vote_count: 5})
+        .returning('*')
+        .then((result) => post = result[0])
+    })
+
+    it("decreases the vote count", () => {
+      return chai.request(app)
+        .delete(`/api/posts/${post.id}/votes`)
+        .then((res) => {
+          expect(res).to.have.status(200)
+          expect(res.body.vote_count).to.eq(4)
+        })
+        .catch((err) => {throw err})
     })
 
   })

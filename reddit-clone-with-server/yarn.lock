@@ -68,6 +68,12 @@ angular-mocks@^1.5.6:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/angular-mocks/-/angular-mocks-1.6.0.tgz#690226486325006abc8f0c2477a6d21fd6212687"
 
+angular-moment@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/angular-moment/-/angular-moment-1.0.1.tgz#509d3326aea23f78221cfddb2b62bfede6841d31"
+  dependencies:
+    moment ">=2.8.0 <3.0.0"
+
 angular-ui-router@1.0.0-beta.3:
   version "1.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/angular-ui-router/-/angular-ui-router-1.0.0-beta.3.tgz#18d5b4af4662cdc282d1e1d7df29cb7085df9d28"
@@ -279,6 +285,10 @@ boom@2.x.x:
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
   dependencies:
     hoek "2.x.x"
+
+bootstrap@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
 brace-expansion@^1.0.0:
   version "1.1.6"
@@ -1677,7 +1687,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-jquery@^3.0.0:
+jquery@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.1.1.tgz#347c1c21c7e004115e0a4da32cece041fad3c8a3"
 
@@ -2089,6 +2099,10 @@ mocha@^2.5.3:
     mkdirp "0.5.1"
     supports-color "1.2.0"
     to-iso-string "0.0.2"
+
+"moment@>=2.8.0 <3.0.0", moment@^2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
 morgan@~1.7.0:
   version "1.7.0"
