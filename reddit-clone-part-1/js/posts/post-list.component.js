@@ -61,6 +61,7 @@
     function createPost() {
       vm.post.vote_count = 0
       vm.post.created_at = new Date
+      vm.post.comments = []
       vm.posts.push(vm.post)
       vm.togglePostForm()
       delete vm.post

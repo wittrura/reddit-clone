@@ -96,11 +96,12 @@
             <span am-time-ago="post.created_at"></span>
             |
             <i class="glyphicon glyphicon-comment"></i>
-            <ng-pluralize
-              ng-click="showComments=!showComments"
-              count="post.comments.length"
-              when="{'0': 'Comments', 'one': '1 Comment', 'other': '{} Comments'}">
-            </ng-pluralize>
+            <a ng-click="showComments=!showComments">
+              <ng-pluralize
+                count="post.comments.length"
+                when="{'0': '0 Comments', 'one': '1 Comment', 'other': '{} Comments'}">
+              </ng-pluralize>
+            </a>
           </div>
           <div ng-if="showComments" class="row">
             <div class="col-md-offset-1">

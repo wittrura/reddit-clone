@@ -34,6 +34,16 @@ describe('App', function() {
       .expectPostToBeAdded()
   })
 
+  it('allows users to add comments', function() {
+    new PostForm()
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+      .expandComments()
+      .addComment('firsties')
+      .expectCommentToBePresent('firsties')
+  })
+
   class PostForm {
     constructor (title = 'My Post Title', body = 'My Post Body', author = 'Some Author', imageUrl = 'http://example.com/foo') {
       this.title = title
@@ -65,6 +75,17 @@ describe('App', function() {
       this.bodyField.sendKeys(this.body)
       this.authorField.sendKeys(this.author)
       this.imageUrlField.sendKeys(this.imageUrl)
+      return this
+    }
+
+    expandComments() {
+      this.postElement.element(by.cssContainingText('a', '0 Comments')).click()
+      return this
+    }
+
+    addComment(content) {
+      this.postElement.all(by.css('input')).first().sendKeys(content)
+      this.postElement.element(by.css('button, input[type=submit]')).click()
       return this
     }
 
@@ -102,6 +123,14 @@ describe('App', function() {
       expect(this.postElement.getText()).toMatch(this.title)
       expect(this.postElement.getText()).toMatch(this.body)
       expect(this.postElement.getText()).toMatch(this.author)
+      expect(this.postElement.getText()).toMatch(/0 Comments/)
+      return this
+    }
+
+    expectCommentToBePresent(content) {
+      expect(this.postElement.getText()).toContain(content)
+      expect(this.postElement.all(by.css('input')).first().getAttribute('value')).toEqual('')
+      return this
     }
   }
 
