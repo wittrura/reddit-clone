@@ -3,39 +3,106 @@ describe('App', function() {
     browser.get(`/`)
   })
 
-  it('can add expenses', function() {
-    // element(by.css('#new-category')).sendKeys('Flyers')
-    // element(by.css('#new-amount')).sendKeys('34.67')
-    // element(by.buttonText('Add Expense')).click()
-    //
-    // // check that the expense was added to the DOM
-    // expect(element.all(by.css('tbody > tr')).count()).toEqual(1)
-    // // check that the expense was persisted
-    // browser.get(`/`)
-    // expect(element.all(by.css('tbody > tr')).count()).toEqual(1)
-    //
-    // element(by.css('#new-category')).sendKeys('Signs')
-    // element(by.css('#new-amount')).sendKeys('4.45')
-    // element(by.buttonText('Add Expense')).click()
-    // expect(element.all(by.css('tbody > tr')).count()).toEqual(2)
-    //
-    // element(by.cssContainingText('tr', 'Flyers')).element(by.linkText('edit')).click()
-    // expect(element(by.css('#edit-category')).getAttribute('value')).toEqual("Flyers");
-    // expect(element(by.css('#edit-amount')).getAttribute('value')).toEqual("34.67");
-    //
-    // element(by.css('#edit-category')).sendKeys('!!')
-    // element(by.css('#edit-amount')).clear()
-    // element(by.css('#edit-amount')).sendKeys('55.55')
-    // element(by.buttonText('Update Expense')).click()
-    //
-    // expect(element(by.cssContainingText('tr', 'Flyers!!')).getText()).toMatch(/Flyers!!/)
-    // browser.get(`/`)
-    // expect(element(by.cssContainingText('tr', 'Flyers!!')).getText()).toMatch(/Flyers!!/)
-    //
-    // element(by.cssContainingText('tr', 'Flyers!!')).element(by.linkText('delete')).click()
-    // expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
-    // browser.get(`/`)
-    // expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
+  it('toggles the form', function() {
+    new PostForm()
+      .expectFormToBeClosed()
+      .clickNewPostButton()
+      .expectFormToBeOpen()
+      .clickNewPostButton()
+      .expectFormToBeClosed()
   })
+
+  it('disables the button until the form is valid', function() {
+    new PostForm()
+      .clickNewPostButton()
+      .expectButtonToBeDisabled()
+      .fillIn()
+      .expectButtonToBeEnabled()
+  })
+
+  it('changes the validation class names on blur', function() {
+    new PostForm()
+      .clickNewPostButton()
+      .expectClassesToChangeOnBlur()
+  })
+
+  it('creates a post', function() {
+    new PostForm()
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+      .expectPostToBeAdded()
+  })
+
+  class PostForm {
+    constructor (title = 'My Post Title', body = 'My Post Body', author = 'Some Author', imageUrl = 'http://example.com/foo') {
+      this.title = title
+      this.body = body
+      this.author = author
+      this.imageUrl = imageUrl
+      this.titleField = element(by.cssContainingText('form div,form p', 'Title')).element(by.css('input'))
+      this.bodyField = element(by.cssContainingText('form div,form p', 'Body')).element(by.css('textarea'))
+      this.authorField = element(by.cssContainingText('form div,form p', 'Author')).element(by.css('input'))
+      this.imageUrlField = element(by.cssContainingText('form div,form p', 'Image URL')).element(by.css('input'))
+      this.newPostButton = element(by.cssContainingText('a,button', 'New Post'))
+      this.createPostButton = element(by.cssContainingText('input,button', 'Create Post'))
+
+      this.postElement = element(by.cssContainingText('div[ng-repeat]', this.title))
+    }
+
+    clickNewPostButton() {
+      this.newPostButton.click()
+      return this
+    }
+
+    clickCreatePostButton() {
+      this.createPostButton.click()
+      return this
+    }
+
+    fillIn() {
+      this.titleField.sendKeys(this.title)
+      this.bodyField.sendKeys(this.body)
+      this.authorField.sendKeys(this.author)
+      this.imageUrlField.sendKeys(this.imageUrl)
+      return this
+    }
+
+    expectFormToBeClosed() {
+      expect(element.all(by.css('form')).count()).toEqual(0)
+      return this
+    }
+
+    expectFormToBeOpen() {
+      expect(element.all(by.css('form')).count()).toEqual(1)
+      return this
+    }
+
+    expectButtonToBeEnabled() {
+      expect(this.createPostButton.getAttribute('disabled')).toEqual(null)
+      return this
+    }
+
+    expectButtonToBeDisabled() {
+      expect(this.createPostButton.getAttribute('disabled')).toEqual('true')
+      return this
+    }
+
+    expectClassesToChangeOnBlur() {
+      [this.titleField, this.bodyField, this.authorField, this.imageUrlField].forEach(el => {
+          const cssClass = el.getAttribute('class')
+          browser.executeScript('arguments[0].focus(); arguments[0].blur()', el)
+          expect(el.getAttribute('class')).not.toEqual(cssClass)
+      })
+      return this
+    }
+
+    expectPostToBeAdded() {
+      expect(this.postElement.element(by.css('img')).getAttribute('src')).toEqual(this.imageUrl)
+      expect(this.postElement.getText()).toMatch(this.title)
+      expect(this.postElement.getText()).toMatch(this.body)
+      expect(this.postElement.getText()).toMatch(this.author)
+    }
+  }
 
 })
