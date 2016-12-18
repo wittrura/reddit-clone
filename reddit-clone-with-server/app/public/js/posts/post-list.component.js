@@ -2,11 +2,11 @@
   'use strict'
 
   angular.module('app')
-    .component('posts', {
+    .component('postList', {
       require: {
         layout: '^app'
       },
-      templateUrl: '/js/posts/posts.template.html',
+      templateUrl: '/js/posts/post-list.template.html',
       controller: controller
     })
 

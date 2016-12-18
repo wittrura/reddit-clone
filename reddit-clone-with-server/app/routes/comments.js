@@ -4,6 +4,7 @@ const knex = require('../db')
 
 router.get('/:post_id/comments', (req, res, next) => {
   knex('comments')
+    .where({post_id: req.params.post_id})
     .then(comments => res.json(comments))
     .catch(err => next(err))
 })

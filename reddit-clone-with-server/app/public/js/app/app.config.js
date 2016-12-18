@@ -18,7 +18,12 @@
       .state({
         name: 'app.posts',
         url: '/',
-        component: 'posts',
+        component: 'postList',
+      })
+      .state({
+        name: 'app.post',
+        url: '/posts/:id',
+        component: 'post',
       })
   }
 

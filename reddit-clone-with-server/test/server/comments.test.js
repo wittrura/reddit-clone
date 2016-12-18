@@ -7,7 +7,7 @@ const db = require('../../app/db')
 
 describe("/api/posts/:post_id/comments", () => {
 
-  let post
+  let post, post2
 
   beforeEach(() => {
     return Promise.all([
@@ -18,6 +18,11 @@ describe("/api/posts/:post_id/comments", () => {
           .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: 'foo.jpg'})
           .returning('*')
           .then((result) => post = result[0])
+      }).then(function () {
+        return db('posts')
+          .insert({title: "Foo", body: "Bar", author: 'Alexander', image_url: 'foo.jpg'})
+          .returning('*')
+          .then((result) => post2 = result[0])
       })
   })
 
@@ -25,6 +30,7 @@ describe("/api/posts/:post_id/comments", () => {
 
     beforeEach(() => {
       return db('comments').insert({content: "Bar", post_id: post.id})
+        .then( () => db('comments').insert({content: "Bar", post_id: post2.id}))
     })
 
     it("returns all comments for the post", () => {
