@@ -34,7 +34,7 @@
       $http.post('/api/posts', vm.post)
         .then(response => {
           vm.posts.push(response.data)
-          vm.layout.togglePostForm()
+          vm.togglePostForm()
           delete vm.post
         })
     }
@@ -55,6 +55,7 @@
     }
 
     function voteDown(post) {
+      if(post.vote_count == 0) return
       $http.delete(`/api/posts/${post.id}/votes`)
         .then(response => {
           post.vote_count = response.data.vote_count
