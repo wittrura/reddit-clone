@@ -5,38 +5,81 @@ describe('App', function() {
   })
 
   it('can add expenses', function() {
-    element(by.css('#new-category')).sendKeys('Flyers')
-    element(by.css('#new-amount')).sendKeys('34.67')
-    element(by.buttonText('Add Expense')).click()
-
-    // check that the expense was added to the DOM
-    expect(element.all(by.css('tbody > tr')).count()).toEqual(1)
-    // check that the expense was persisted
-    browser.get(`/`)
-    expect(element.all(by.css('tbody > tr')).count()).toEqual(1)
-
-    element(by.css('#new-category')).sendKeys('Signs')
-    element(by.css('#new-amount')).sendKeys('4.45')
-    element(by.buttonText('Add Expense')).click()
-    expect(element.all(by.css('tbody > tr')).count()).toEqual(2)
-
-    element(by.cssContainingText('tr', 'Flyers')).element(by.linkText('edit')).click()
-    expect(element(by.css('#edit-category')).getAttribute('value')).toEqual("Flyers");
-    expect(element(by.css('#edit-amount')).getAttribute('value')).toEqual("34.67");
-
-    element(by.css('#edit-category')).sendKeys('!!')
-    element(by.css('#edit-amount')).clear()
-    element(by.css('#edit-amount')).sendKeys('55.55')
-    element(by.buttonText('Update Expense')).click()
-
-    expect(element(by.cssContainingText('tr', 'Flyers!!')).getText()).toMatch(/Flyers!!/)
-    browser.get(`/`)
-    expect(element(by.cssContainingText('tr', 'Flyers!!')).getText()).toMatch(/Flyers!!/)
-
-    element(by.cssContainingText('tr', 'Flyers!!')).element(by.linkText('delete')).click()
-    expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
-    browser.get(`/`)
-    expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
+    new Expenses()
+      .addExpense()
+      .expectExpenseIsAddedAndPersisted()
+      .addAnotherExpense()
+      .updateExpense()
+      .expectExpenseIsUpdatedAndPersisted()
+      .deleteExpense()
+      .expectExpenseIsDeletedAndPersisted()
   })
+
+  class Expenses {
+
+    constructor() {
+      this.newCategoryField = element(by.css('#new-category'))
+      this.newAmountField = element(by.css('#new-amount'))
+      this.addExpenseButton = element(by.buttonText('Add Expense'))
+      this.rows = element.all(by.css('tbody > tr'))
+      this.editCategoryField = element(by.css('#edit-category'))
+      this.editAmountField = element(by.css('#edit-amount'))
+      this.expenseRow = element(by.cssContainingText('tr', 'Flyers!!'))
+    }
+
+    addExpense() {
+      this.newCategoryField.sendKeys('Flyers')
+      this.newAmountField.sendKeys('34.67')
+      this.addExpenseButton.click()
+      return this
+    }
+
+    addAnotherExpense() {
+      this.newCategoryField.sendKeys('Signs')
+      this.newAmountField.sendKeys('4.45')
+      this.addExpenseButton.click()
+      expect(this.rows.count()).toEqual(2)
+      return this
+    }
+
+    updateExpense() {
+      element(by.cssContainingText('tr', 'Flyers')).element(by.linkText('edit')).click()
+      expect(this.editCategoryField.getAttribute('value')).toEqual("Flyers");
+      expect(this.editAmountField.getAttribute('value')).toEqual("34.67");
+
+      this.editCategoryField.sendKeys('!!')
+      this.editAmountField.clear()
+      this.editAmountField.sendKeys('55.55')
+      element(by.buttonText('Update Expense')).click()
+      return this
+    }
+
+    deleteExpense() {
+      this.expenseRow.element(by.linkText('delete')).click()
+      return this
+    }
+
+    expectExpenseIsAddedAndPersisted() {
+      expect(this.rows.count()).toEqual(1)
+      browser.get(`/`)
+      expect(this.rows.count()).toEqual(1)
+      return this
+    }
+
+    expectExpenseIsUpdatedAndPersisted() {
+      expect(this.expenseRow.getText()).toMatch(/Flyers!!/)
+      browser.get(`/`)
+      expect(this.expenseRow.getText()).toMatch(/Flyers!!/)
+      return this
+    }
+
+    expectExpenseIsDeletedAndPersisted() {
+      expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
+      browser.get(`/`)
+      expect(element.all(by.cssContainingText('tr', 'Flyers!!')).count()).toEqual(0)
+      return this
+    }
+
+  }
 
 })
