@@ -224,7 +224,19 @@ describe('App', function() {
       return this
     }
 
+    refresh() {
+      browser.get(`/`)
+    }
+
     expectPostToBeAdded() {
+      expect(this.postElement.element(by.css('img')).getAttribute('src')).toEqual(this.imageUrl)
+      expect(this.postElement.getText()).toMatch(this.title)
+      expect(this.postElement.getText()).toMatch(this.body)
+      expect(this.postElement.getText()).toMatch(this.author)
+      expect(this.postElement.getText()).toMatch(/0 Comments/)
+
+      this.refresh()
+
       expect(this.postElement.element(by.css('img')).getAttribute('src')).toEqual(this.imageUrl)
       expect(this.postElement.getText()).toMatch(this.title)
       expect(this.postElement.getText()).toMatch(this.body)
@@ -236,6 +248,12 @@ describe('App', function() {
     expectCommentToBePresent(content) {
       expect(this.postElement.getText()).toContain(content)
       expect(this.postElement.all(by.css('input')).first().getAttribute('value')).toEqual('')
+
+      this.refresh()
+
+      this.postElement.element(by.cssContainingText('a', '1 Comment')).click()
+      expect(this.postElement.getText()).toContain(content)
+
       return this
     }
 
