@@ -4,10 +4,10 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  specs: ['*.test.js'],
+  specs: ['app.test.js'],
   onPrepare: function () {
     const path = require('path')
-    const app = require('../app/app')
+    const app = require('../../app/app')
     const http = require('http')
     const server = http.createServer(app)
 
