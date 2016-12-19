@@ -27,9 +27,9 @@ gulp.task('nodemon', function (cb) {
       'node_modules/'
     ],
   }).on('start', function () {
-		if (!started) {
-			cb()
-			started = true
-		}
+    if (!started) {
+			setTimeout(cb, 500)
+      started = true
+    }
 	})
 })

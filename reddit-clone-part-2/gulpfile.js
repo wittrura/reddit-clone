@@ -1,25 +1,25 @@
 // https://gist.github.com/sogko/b53d33d4f3b40d3b4b2e
 const gulp = require('gulp')
-const browserSync = require('browser-sync')
+const browserSync = require('browser-sync').create()
 const nodemon = require('gulp-nodemon')
 
 gulp.task('default', ['browser-sync'], function () {
 })
 
 gulp.task('browser-sync', ['nodemon'], function() {
-	browserSync.init(null, {
-		proxy: 'http://localhost:5000',
+  browserSync.init({
+    proxy: 'http://localhost:5000',
     files: ['app/public/**/*.*'],
     browser: 'google chrome',
     port: 7000,
-		// online: true,
-	})
+		reloadDelay: 1000,
+  })
 })
 
 gulp.task('nodemon', function (cb) {
-	let started = false
+  let started = false
 
-	return nodemon({
+  return nodemon({
     script: './app/bin/www',
     ignore: [
       'test/',
@@ -28,9 +28,9 @@ gulp.task('nodemon', function (cb) {
       'node_modules/'
     ],
   }).on('start', function () {
-		if (!started) {
-			cb()
-			started = true
-		}
-	})
+    if (!started) {
+			setTimeout(cb, 500)
+      started = true
+    }
+  })
 })
