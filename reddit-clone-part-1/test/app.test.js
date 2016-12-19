@@ -44,6 +44,96 @@ describe('App', function() {
       .expectCommentToBePresent('firsties')
   })
 
+  it('clicking on comments only expands a single comments field (not all of them)', function() {
+    const firstPost = new PostForm()
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+
+    const secondPost = new PostForm('My other title', 'My other text', 'Some Other Author', 'http://example.com/bar')
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+
+    firstPost
+      .expectCommentsToBeCollapsed()
+      .expandComments()
+      .expectCommentsToBeExpanded()
+
+    secondPost
+      .expectCommentsToBeCollapsed()
+      .expandComments()
+      .expectCommentsToBeExpanded()
+  })
+
+  it('allows users to filter', function() {
+    const firstPost = new PostForm('To be')
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+
+    const secondPost = new PostForm('Or not to be', 'My other text', 'Some Other Author', 'http://example.com/bar')
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+
+    const filterer = new Filterer().filterBy('to be')
+
+    firstPost.expectToBePresent()
+    secondPost.expectToBePresent()
+
+    filterer.filterBy('not')
+    firstPost.expectToNotBePresent()
+    secondPost.expectToBePresent()
+  })
+
+  it('allows users to sort', function() {
+    const firstPost = new PostForm('Zebras rock')
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+
+    const secondPost = new PostForm('Anteaters Rock')
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+
+    new Sorter()
+      .expectSortByVotesToShow()
+      .clickOnSortByTitle()
+  })
+
+  class Filterer {
+    constructor() {
+      this.filterField = element(by.css('input[placeholder=Filter]'))
+    }
+
+    filterBy(input) {
+      this.filterField.clear()
+      this.filterField.sendKeys(input)
+      return this
+    }
+  }
+
+  class Sorter {
+    constructor() {
+      this.sortByVotesHeader = element(by.cssContainingText('a', 'Sort By Votes'))
+
+      this.sortByTitle = element(by.cssContainingText('a', 'Title'))
+    }
+
+    clickOnSortByTitle() {
+      this.sortByVotesHeader.click()
+      this.sortByTitle.click()
+      return this
+    }
+
+    expectSortByVotesToShow() {
+      expect(this.sortByVotesHeader.isDisplayed()).toEqual(true)
+      return this
+    }
+  }
+
   class PostForm {
     constructor (title = 'My Post Title', body = 'My Post Body', author = 'Some Author', imageUrl = 'http://example.com/foo') {
       this.title = title
@@ -56,8 +146,8 @@ describe('App', function() {
       this.imageUrlField = element(by.cssContainingText('form div,form p', 'Image URL')).element(by.css('input'))
       this.newPostButton = element(by.cssContainingText('a,button', 'New Post'))
       this.createPostButton = element(by.cssContainingText('input,button', 'Create Post'))
-
       this.postElement = element(by.cssContainingText('div[ng-repeat]', this.title))
+      this.postElements = element.all(by.cssContainingText('div[ng-repeat]', this.title))
     }
 
     clickNewPostButton() {
@@ -91,6 +181,16 @@ describe('App', function() {
 
     expectFormToBeClosed() {
       expect(element.all(by.css('form')).count()).toEqual(0)
+      return this
+    }
+
+    expectToBePresent() {
+      expect(this.postElements.count()).toBeGreaterThan(0)
+      return this
+    }
+
+    expectToNotBePresent() {
+      expect(this.postElements.count()).toEqual(0)
       return this
     }
 
@@ -130,6 +230,16 @@ describe('App', function() {
     expectCommentToBePresent(content) {
       expect(this.postElement.getText()).toContain(content)
       expect(this.postElement.all(by.css('input')).first().getAttribute('value')).toEqual('')
+      return this
+    }
+
+    expectCommentsToBeCollapsed() {
+      expect(this.postElement.all(by.css('input')).count()).toEqual(0)
+      return this
+    }
+
+    expectCommentsToBeExpanded() {
+      expect(this.postElement.all(by.css('input')).count()).toBeGreaterThan(0)
       return this
     }
   }
