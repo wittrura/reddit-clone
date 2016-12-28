@@ -109,6 +109,18 @@ describe('App', function() {
       .clickOnSortByTitle()
   })
 
+  it('allows users to edit', function() {
+    new PostForm('To be')
+      .clickNewPostButton()
+      .fillIn()
+      .clickCreatePostButton()
+      .clickEdit()
+      .expectClassesToChangeOnBlur()
+      .fillIn('I was updated', "here's new text")
+      .clickUpdate()
+      .expectToBePresent()
+  })
+
   class Filterer {
     constructor() {
       this.filterField = element(by.css('input[placeholder=Filter]'))
@@ -154,6 +166,8 @@ describe('App', function() {
       this.createPostButton = element(by.cssContainingText('input,button', 'Create Post'))
       this.postElement = element(by.cssContainingText('div[ng-repeat]', this.title))
       this.postElements = element.all(by.cssContainingText('div[ng-repeat]', this.title))
+      this.editLink = this.postElement.element(by.cssContainingText('a', 'edit'))
+      this.updateButton = element(by.cssContainingText('input,button', 'Update'))
     }
 
     clickNewPostButton() {
@@ -166,9 +180,21 @@ describe('App', function() {
       return this
     }
 
-    fillIn() {
-      this.titleField.sendKeys(this.title)
-      this.bodyField.sendKeys(this.body)
+    clickEdit() {
+      this.editLink.click()
+      return this
+    }
+
+    clickUpdate() {
+      this.updateButton.click()
+      return this
+    }
+
+    fillIn(title = this.title, body = this.body) {
+      this.title = title
+      this.body = body
+      this.titleField.sendKeys(title)
+      this.bodyField.sendKeys(body)
       this.authorField.sendKeys(this.author)
       this.imageUrlField.sendKeys(this.imageUrl)
       return this
