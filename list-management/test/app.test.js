@@ -35,7 +35,8 @@ describe('App', function() {
     }
 
     deleteItem() {
-      element(by.cssContainingText('div', 'Couch 2')).element(by.linkText('Delete')).click()
+      this.addItem()
+      element(by.cssContainingText('div', 'Gnome 34')).element(by.linkText('Delete')).click()
       return this
     }
 
@@ -56,7 +57,7 @@ describe('App', function() {
     }
 
     expectItemDeleted() {
-      expect(this.items.count()).toEqual(1)
+      expect(this.items.count()).toEqual(2)
       return this
     }
 
