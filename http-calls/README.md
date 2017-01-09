@@ -1,4 +1,4 @@
-# Routes with ui-router
+# $http Service
 
 Create an Angular application that allows users to CRUD data from a server.
 
