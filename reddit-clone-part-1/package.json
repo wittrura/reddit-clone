@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "postinstall": "webdriver-manager update",
-    "test": "NODE_ENV=test protractor test/conf.js",
+    "test": "NODE_ENV=test (if [ ! -d ../app/node_modules ]; then (cd ../app && yarn) fi) && protractor test/conf.js",
     "start": "lite-server"
   },
   "keywords": [],

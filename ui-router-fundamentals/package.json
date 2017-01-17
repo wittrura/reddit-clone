@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "webdriver-manager update",
-    "test": "protractor test/conf.js",
+    "test": "(if [ ! -d ../app/node_modules ]; then (cd ../app && yarn) fi) && protractor test/conf.js",
     "start": "lite-server"
   },
   "keywords": [],
