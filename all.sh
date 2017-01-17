@@ -1,3 +1,5 @@
+cd angular-1-legacy && npm test
+cd ../
 cd simple-interaction && npm test
 cd ../
 cd list-management && npm test

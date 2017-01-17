@@ -33,6 +33,8 @@ Run `yarn` and `npm start` to see the app locally.
 
 Run `npm test` to run the tests.
 
+> Check the "test/screenshots" folder for examples of what each test is looking for.
+
 ## Hint
 
 Search the project for `TODO` to help you find some of the places where you need to make changes.

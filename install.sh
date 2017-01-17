@@ -1,3 +1,5 @@
+cd angular-1-legacy && npm install
+cd ../
 cd simple-interaction && npm install
 cd ../
 cd list-management && npm install

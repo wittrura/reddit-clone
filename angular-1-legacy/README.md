@@ -7,7 +7,9 @@ yarn
 npm start
 ```
 
-To run tests, run `npm test`
+To run tests, run `npm test`.
+
+> Check the "test/screenshots" folder for examples of what each test is looking for.
 
 ## Upgrade to Components
 

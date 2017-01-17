@@ -24,6 +24,8 @@ Run `yarn` and `npm start` to see the app locally.
 
 Run `npm test` to run the tests.
 
+> Check the "test/screenshots" folder for examples of what each test is looking for.
+
 ## Coding standards
 
 Recall the 4-step process for setting up basic Angular applications:
