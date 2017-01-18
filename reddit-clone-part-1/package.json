@@ -1,10 +1,12 @@
+
 {
   "name": "angular-drill",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "postinstall": "webdriver-manager update",
-    "test": "NODE_ENV=test (if [ ! -d ../app/node_modules ]; then (cd ../app && yarn) fi) && protractor test/conf.js",
+    "ensure-app": "if [ ! -d ../app/node_modules ]; then (cd ../app && yarn) fi",
+    "test": "npm run ensure-app && NODE_ENV=test protractor test/conf.js",
     "start": "lite-server"
   },
   "keywords": [],
