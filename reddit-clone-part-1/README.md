@@ -46,17 +46,13 @@ If you are using Bootstrap, your HTML snippets might look like this:
     <li role="presentation" class="active">
       <input type="search" class="form-control input-sm search-form" placeholder="Filter">
     </li>
-    <li class="dropdown">
-      <a href="#"
-        class="dropdown-toggle"
-        data-toggle="dropdown"
-        role="button"
-        aria-haspopup="true"
-        aria-expanded="false">Some text<span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a>Some text</a></li>
-      </ul>
-    </li>
+    <div class="form-inline">
+      <label for="sort">  Sort by </label>
+      <select class="form-control" id="sort">
+        <option>Some text</option>
+        <option>Some text</option>
+      </select>
+    </div>
   </ul>
 
   <div class="row">
