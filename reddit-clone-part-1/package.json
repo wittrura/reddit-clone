@@ -16,8 +16,8 @@
     "browser-sync": "^2.18.5",
     "express": "^4.14.0",
     "mocha": "^2.5.3",
-    "protractor": "^4.0.13",
-    "protractor-jasmine2-screenshot-reporter": "^0.3.2"
+    "protractor": "latest",
+    "protractor-jasmine2-screenshot-reporter": "latest",
   },
   "dependencies": {
     "angular": "^1.6.0",

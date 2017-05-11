@@ -23,8 +23,8 @@
     "mocha": "^2.5.3",
     "morgan": "~1.7.0",
     "nodemon": "^1.11.0",
-    "protractor": "^4.0.13",
-    "protractor-jasmine2-screenshot-reporter": "^0.3.2",
+    "protractor": "latest",
+    "protractor-jasmine2-screenshot-reporter": "latest",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
   },
