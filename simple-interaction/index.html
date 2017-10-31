@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
     <meta charset="utf-8">
     <title>Angular Drill</title>
   </head>
   <body>
+    <app></app>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
+    <script>
+      angular.module('app', [])
+        .component('app', {
+          controller: function () {
+            const vm = this
 
+            vm.updateFullName = function () {
+              if (vm.nickname) {
+                vm.fullName = `${vm.firstName} "${vm.nickname}" ${vm.lastName}`;
+              } else {
+                vm.fullName = `${vm.firstName} ${vm.lastName}`;
+              }
+            }
+          },
+          template: `
+            <label for="firstName">First Name:</label>
+            <p><input type="text" ng-model="$ctrl.firstName" id="firstName" placeholder="first name"></p>
+            <label for="nickname">Nickname:</label>
+            <p><input type="text" ng-model="$ctrl.nickname" id="nickname" placeholder="nickname"></p>
+            <label for="lastName">Last Name:</label>
+            <p><input type="text" ng-model="$ctrl.lastName" id="lastName" placeholder="last name"></p>
+            <p><button ng-click="$ctrl.updateFullName()">Submit</button></p>
+            <p>{{$ctrl.fullName}}</p>
+          `
+        })
+    </script>
   </body>
 </html>
