@@ -1,0 +1,72 @@
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">Reddit Clone</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <div class="pull-right">
+    <p><a class="btn btn-info" ng-click="$ctrl.toggleNewPostForm()">New Post</a></p>
+  </div>
+
+  <!-- search and filtering -->
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by DEFAULT <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Votes</a></li>
+        <li><a href="#">Date</a></li>
+        <li><a href="#">Title</a></li>
+      </ul>
+    </li>
+  </ul>
+  <!-- /search and filtering -->
+
+  <!-- new post form -->
+  <div class="row">
+    <div class="col-md-8">
+      <form ng-if="$ctrl.newPostFormDisplay">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input id="title" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="body">Body</label>
+          <textarea id="body" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input id="author" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="image-url">Image URL</label>
+          <input id="image-url" class="form-control">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">
+            Create Post
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <!-- /new post form -->
+
+</main>
