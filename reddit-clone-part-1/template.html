@@ -81,7 +81,6 @@
           <button type="submit" class="btn btn-primary" ng-disabled="$ctrl.newPostForm.$invalid">Create Post</button>
         </div>
       </form>
-
     </div>
   </div>
   <!-- /new post form -->
@@ -97,9 +96,9 @@
         </div>
         <div class="media-body">
           <h4 class="media-heading">{{post.title}} |
-            <a><i class="glyphicon glyphicon-arrow-up"></i></a>
-            <a><i class="glyphicon glyphicon-arrow-down"></i></a>
-             10
+            <a ng-click="$ctrl.upvotePost(post)"><i class="glyphicon glyphicon-arrow-up"></i></a>
+            <a ng-click="$ctrl.downvotePost(post)"><i class="glyphicon glyphicon-arrow-down"></i></a>
+             {{post.score}}
           </h4>
           <div class="text-right">{{post.author}}</div>
           <p>{{post.body}}</p>
