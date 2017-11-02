@@ -17,6 +17,7 @@
         e.preventDefault();
         vm.posts.push(vm.newPost);
         delete vm.newPost;
+        vm.newPostForm.$setPristine();
       }
 
       vm.deletePost = function (e, post) {
