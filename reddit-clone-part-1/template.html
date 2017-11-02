@@ -25,15 +25,21 @@
     <li role="presentation" class="active">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search">
-      </div </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by DEFAULT <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Votes</a></li>
-          <li><a href="#">Date</a></li>
-          <li><a href="#">Title</a></li>
-        </ul>
-      </li>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by {{$ctrl.propertyName}}
+        <!-- <span class="caret"></span> -->
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#" ng-click="$ctrl.sortBy($event, 'score')">Votes</a></li>
+        <li><a href="#" ng-click="$ctrl.sortBy($event, 'date')">Date</a></li>
+        <li><a href="#" ng-click="$ctrl.sortBy($event, 'title')">Title</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a>
+    </li>
   </ul>
   <!-- /search and filtering -->
 
@@ -86,7 +92,7 @@
   <!-- /new post form -->
 
   <!-- posts -->
-  <div class="row" ng-repeat="post in $ctrl.posts">
+  <div class="row" ng-repeat="post in $ctrl.posts | orderBy:$ctrl.propertyName:$ctrl.reverse">
     <div class="col-md-12">
       <div class="media well">
         <div class="media-left">

@@ -6,10 +6,12 @@
 
       vm.$onInit = function () {
         vm.newPostFormDisplay = true;
+        vm.propertyName = 'score';
+        vm.reverse = true;
         vm.posts = [
-          {title: 'this is a guy with a beard', body: 'what is with all the beards?', author: 'bondy', imageUrl: 'https://static.pexels.com/photos/211050/pexels-photo-211050.jpeg', score: 0},
-          {title: 'more beards', body: 'srsly?', author: 'russ', imageUrl: 'https://static.pexels.com/photos/69212/pexels-photo-69212.jpeg', score: 0},
-          {title: 'not trying at all', body: "she's so... uniqiue", author: 'ryan', imageUrl: 'https://static.pexels.com/photos/192440/pexels-photo-192440.jpeg', score: 0}
+          {title: 'this is a guy with a beard', body: 'what is with all the beards?', author: 'bondy', imageUrl: 'https://static.pexels.com/photos/211050/pexels-photo-211050.jpeg', score: 0, date: new Date(2017, 10, 2, 9, 10, 20, 30)},
+          {title: 'more beards', body: 'srsly?', author: 'russ', imageUrl: 'https://static.pexels.com/photos/69212/pexels-photo-69212.jpeg', score: 0, date: new Date(2017, 10, 2, 9, 20, 20, 30)},
+          {title: 'not trying at all', body: "she's so... uniqiue", author: 'ryan', imageUrl: 'https://static.pexels.com/photos/192440/pexels-photo-192440.jpeg', score: 0, date: new Date(2017, 10, 2, 9, 10, 40, 30)}
         ];
       }
 
@@ -19,6 +21,8 @@
 
       vm.createPost = function (e) {
         e.preventDefault();
+        vm.newPost.score = 0;
+        vm.newPost.date = new Date();
         vm.posts.push(vm.newPost);
         delete vm.newPost;
         vm.newPostForm.$setPristine();
@@ -36,6 +40,13 @@
       vm.downvotePost = function (post) {
         if (post.score > 0) post.score -= 1;
       }
+
+      vm.sortBy = function(e, propertyName) {
+        console.log(propertyName);
+        e.preventDefault();
+        // vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+        vm.propertyName = propertyName;
+      };
     },
 
     templateUrl: 'template.html'
