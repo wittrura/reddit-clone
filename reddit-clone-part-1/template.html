@@ -109,24 +109,22 @@
           <div class="text-right">{{post.author}}</div>
           <p>{{post.body}}</p>
           <div>
-            <span am-time-ago="{{post.date}}"></span |
+            <span am-time-ago="{{post.date}}"></span> |
             <i class="glyphicon glyphicon-comment"></i>
-            <a>Some comments</a>
+            <!-- showComments is bound to current post -->
+            <a ng-click="showComments=!showComments">Some comments</a>
           </div>
-          <div class="row">
-            <div class="col-md-offset-1">
-              <hr>
-              <p>Comment text</p>
-              <form class="form-inline">
-                <div class="form-group">
-                  <input class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary">
-                </div>
-              </form>
+
+          <!-- comments -->
+          <div class="container" ng-if="showComments">
+            <div class="media" ng-repeat="comment in post.comments">
+              <div class="media-body">
+                <h5 class="media-heading">{{comment.body}}</h5>
+              </div>
             </div>
           </div>
+          <!-- /comments -->
+
         </div>
       </div>
     </div>
