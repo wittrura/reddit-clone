@@ -80,6 +80,17 @@
         newComment.body = "";
         newCommentForm.$setPristine();
       }
+
+      vm.toggleComments = function(toggledPost) {
+        // post.showComments = !post.showComments;
+        vm.posts.forEach(post => {
+          if(post.title === toggledPost.title) {
+            post.showComments = !post.showComments;
+          } else {
+            post.showComments = false;
+          }
+        })
+      }
     },
 
     templateUrl: 'template.html'

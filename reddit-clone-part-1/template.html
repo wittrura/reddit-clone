@@ -111,7 +111,8 @@
             <span am-time-ago="{{post.date}}"></span> |
             <i class="glyphicon glyphicon-comment"></i>
             <!-- showComments is bound to current post -->
-            <a ng-click="showComments=!showComments">
+            <!-- <a ng-click="showComments=!showComments"> -->
+            <a ng-click="$ctrl.toggleComments(post)">
               <ng-pluralize
               count="post.comments.length"
               when="{'1': '1 comment',
@@ -120,7 +121,8 @@
             </a>
           </div>
 
-          <div ng-if="showComments">
+          <!-- <div ng-if="showComments"> -->
+          <div ng-if="post.showComments">
             <!-- comments -->
             <div class="media" ng-repeat="comment in post.comments">
               <div class="media-body">
