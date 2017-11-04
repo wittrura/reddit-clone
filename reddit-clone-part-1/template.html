@@ -9,9 +9,7 @@
       </button>
       <a class="navbar-brand">Reddit Clone</a>
     </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
   </div>
 </nav>
 
@@ -29,7 +27,7 @@
     </li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by {{$ctrl.propertyName}}
-        <!-- <span class="caret"></span> -->
+        <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
         <li><a href="#" ng-click="$ctrl.sortBy($event, 'score')">Votes</a></li>
@@ -38,6 +36,7 @@
       </ul>
     </li>
     <li>
+      <!-- TODO - sort ascending and descending -->
       <a href="#"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a>
     </li>
   </ul>
@@ -112,18 +111,40 @@
             <span am-time-ago="{{post.date}}"></span> |
             <i class="glyphicon glyphicon-comment"></i>
             <!-- showComments is bound to current post -->
-            <a ng-click="showComments=!showComments">Some comments</a>
+            <a ng-click="showComments=!showComments">
+              <ng-pluralize
+              count="post.comments.length"
+              when="{'1': '1 comment',
+                 'other': '{} comments'}">
+              </ng-pluralize>
+            </a>
           </div>
 
-          <!-- comments -->
-          <div class="container" ng-if="showComments">
+          <div ng-if="showComments">
+            <!-- comments -->
             <div class="media" ng-repeat="comment in post.comments">
               <div class="media-body">
-                <h5 class="media-heading">{{comment.body}}</h5>
+                <p class="media-heading">{{comment.body}}</p>
               </div>
             </div>
+            <!-- /comments -->
+              <hr>
+              <!-- newComment -->
+              <form class="form-inline" novalidate name="newCommentForm" ng-submit="$ctrl.createComment($event, post, newComment, newCommentForm)">
+                <div class="form-group" ng-class="{
+                  'has-error' : newCommentForm.body.$invalid && newCommentForm.body.$dirty,
+                  'has-success' : newCommentForm.body.$valid
+                }">
+                  <label class="control-label" for="body">Comment text</label>
+                  <input required class="form-control" type="text" name="body" ng-model="newComment.body">
+                  <p ng-show="newCommentForm.body.$error.required && newCommentForm.body.$dirty">Your username is required.</p>
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary" ng-disabled="newCommentForm.$invalid">
+                </div>
+              </form>
+              <!-- /newComment -->
           </div>
-          <!-- /comments -->
 
         </div>
       </div>

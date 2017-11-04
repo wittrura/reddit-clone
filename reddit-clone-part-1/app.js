@@ -25,7 +25,8 @@
             imageUrl: 'https://static.pexels.com/photos/69212/pexels-photo-69212.jpeg',
             score: 0,
             date: new Date(2017, 10, 2, 9, 20, 20, 30),
-            comments: [{body: 'so fly!'}, {body: 'what a goon'}]
+            comments: []
+            // comments: [{body: 'so fly!'}, {body: 'what a goon'}]
           },{
             title: 'not trying at all',
             body: "she's so... uniqiue",
@@ -70,6 +71,15 @@
         // vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
         vm.propertyName = propertyName;
       };
+
+      vm.createComment = function (e, post, newComment, newCommentForm) {
+        e.preventDefault();
+        post.comments.push({
+          body: newComment.body
+        });
+        newComment.body = "";
+        newCommentForm.$setPristine();
+      }
     },
 
     templateUrl: 'template.html'
