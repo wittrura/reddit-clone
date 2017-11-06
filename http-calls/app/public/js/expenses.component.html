@@ -1,0 +1,34 @@
+<h1>Expenses</h1>
+
+<form ng-submit="$ctrl.addExpense()">
+  <p>Category: <input id="new-category" ng-model="$ctrl.newExpense.category"></p>
+  <p>Amount: <input id="new-amount" ng-model="$ctrl.newExpense.amount"></p>
+  <p><button type="submit">Add Expense</button></p>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Category</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="expense in $ctrl.expenses">
+      <td>{{expense.id}}</td>
+      <td>{{expense.category}}</td>
+      <td>{{expense.amount}}</td>
+      <td>
+        <a href="#">edit</a>
+        <a href="#">delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<form>
+  <p>Category: <input id="edit-category"></p>
+  <p>Amount: <input id="edit-amount"></p>
+  <p><button type="submit">Update Expense</button></p>
+</form>
