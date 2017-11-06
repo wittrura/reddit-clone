@@ -1,5 +1,5 @@
 (function() {
-  angular.module('app', ['angularMoment'])
+  angular.module('app')
   .component('app', {
     controller: function() {
       const vm = this;
@@ -93,6 +93,6 @@
       }
     },
 
-    templateUrl: 'template.html'
+    templateUrl: '/app/controllers/postList/postListTemplate.html'
   })
 }());
