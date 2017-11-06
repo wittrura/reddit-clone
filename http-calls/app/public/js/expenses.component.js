@@ -22,6 +22,32 @@
         vm.expenses.push(response.data);
       });
     }
+
+    vm.toggleEditForm = function(expense) {
+      // clear form
+      delete vm.editedExpense;
+
+      // if the form has only been clicked once, display the form and update expenseToEdit
+      // if a different edit link is clicked, display the form and update expenseToEdit
+      if (!vm.expenseToEdit || vm.expenseToEdit.id !== expense.id) {
+        vm.showEditForm = true;
+        // for storing expense that will be updated
+        vm.expenseToEdit = expense;
+      } else {
+        vm.showEditForm = !vm.showEditForm;
+      }
+
+      console.log(vm.expenseToEdit);
+    }
+
+    vm.updateExpense = function(expense) {
+      console.log(expense);
+      console.log(vm.editedExpense);
+    }
+
+    vm.destroy = function(expense) {
+      console.log(expense);
+    }
   }
 
 }());

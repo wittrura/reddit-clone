@@ -20,15 +20,15 @@
       <td>{{expense.category}}</td>
       <td>{{expense.amount}}</td>
       <td>
-        <a href="#">edit</a>
-        <a href="#">delete</a>
+        <a href="#" ng-click="$ctrl.toggleEditForm(expense)">edit</a>
+        <a href="#" ng-click="$ctrl.destroy(expense)">delete</a>
       </td>
     </tr>
   </tbody>
 </table>
 
-<form>
-  <p>Category: <input id="edit-category"></p>
-  <p>Amount: <input id="edit-amount"></p>
+<form ng-if="$ctrl.showEditForm" ng-submit="$ctrl.updateExpense($ctrl.expenseToEdit)">
+  <p>Category: <input id="edit-category" placeholder="{{$ctrl.expenseToEdit.category}}" ng-model="$ctrl.editedExpense.category"></p>
+  <p>Amount: <input id="edit-amount" placeholder="{{$ctrl.expenseToEdit.amount}}" ng-model="$ctrl.editedExpense.amount"></p>
   <p><button type="submit">Update Expense</button></p>
 </form>
