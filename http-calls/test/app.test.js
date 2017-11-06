@@ -44,10 +44,10 @@ describe('App', function() {
 
     updateExpense() {
       element(by.cssContainingText('tr', 'Flyers')).element(by.linkText('edit')).click()
-      expect(this.editCategoryField.getAttribute('value')).toEqual("Flyers");
-      expect(this.editAmountField.getAttribute('value')).toEqual("34.67");
+      expect(this.editCategoryField.getAttribute('placeholder')).toEqual("Flyers");
+      expect(this.editAmountField.getAttribute('placeholder')).toEqual("34.67");
 
-      this.editCategoryField.sendKeys('!!')
+      this.editCategoryField.sendKeys('Flyers!!')
       this.editAmountField.clear()
       this.editAmountField.sendKeys('55.55')
       element(by.buttonText('Update Expense')).click()
