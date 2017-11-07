@@ -3,7 +3,7 @@
 
   angular.module('app').config(config)
 
-  // TODO: figure out how to configure the app correctly
+  // TODO - why is this not required?
   // config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider']
   function config($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -16,11 +16,11 @@
     $stateProvider
       .state('home', {
         url: '/',
-        component: 'houseList'
+        component: 'houseList' // COMPONENT and NOT CONTROLLER
       })
       .state('new', {
         url: '/houses/new',
-        component: 'houseNew' // COMPONENT and NOT CONTROLLER
+        component: 'houseNew'
       })
       .state('house', {
         url: '/houses/{houseId}',

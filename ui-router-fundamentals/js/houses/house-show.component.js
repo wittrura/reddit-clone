@@ -18,7 +18,6 @@
       const vm = this
 
       vm.$onInit = function () {
-        // TODO: figure out how to pull the house id from the URL
         const houseId = $state.params.houseId;
         vm.house = houseService.findById(houseId)
       }

@@ -3,13 +3,7 @@
 
   angular.module('app')
     .component('houseList', {
-      controller: function (houseService) {
-        const vm = this
-
-        vm.$onInit = function () {
-          vm.houses = houseService.houses
-        }
-      },
+      controller: controller,
       template: `
         <h1>Houses</h1>
 
@@ -22,6 +16,14 @@
         <!-- TODO: add link here -->
         <a ui-sref="new">Add House</a>
       `
-    })
+    });
+
+    function controller (houseService) {
+      const vm = this
+
+      vm.$onInit = function () {
+        vm.houses = houseService.houses
+      }
+    }
 
 }());
