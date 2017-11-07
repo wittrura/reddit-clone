@@ -15,11 +15,12 @@
 
         <ul>
           <li ng-repeat="house in $ctrl.houses">
-            <!-- TODO: add link here -->
+            <a ui-sref="house({ houseId: house.id })">{{house.name}}</a>
           </li>
         </ul>
 
         <!-- TODO: add link here -->
+        <a ui-sref="new">Add House</a>
       `
     })
 

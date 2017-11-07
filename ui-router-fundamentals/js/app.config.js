@@ -20,8 +20,12 @@
       })
       .state('new', {
         url: '/houses/new',
-        component: 'houseNew'
+        component: 'houseNew' // COMPONENT and NOT CONTROLLER
       })
+      .state('house', {
+        url: '/houses/{houseId}',
+        component: 'houseShow'
+      });
 
   }
 
