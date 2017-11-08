@@ -12,14 +12,17 @@
       const postId = $state.params.postId;
       $http.get(`/api/posts/${postId}`).then(function(response) {
         vm.postToEdit = response.data;
-        console.log(vm.postToEdit);
+        vm.post = response.data;
       });
     };
 
     vm.editPost = function() {
       // send PATCH to server
-      // redirect to posts / list page
-      return null;
+      const postId = $state.params.postId;
+      $http.patch(`/api/posts/${postId}`, vm.post).then(function(response) {
+        delete vm.post;
+        $state.go('postsList')
+      });
     }
   }
 }());
