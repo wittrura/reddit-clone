@@ -10,11 +10,13 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
+// to keep node_modules from being public
 app.use(express.static(path.join(__dirname, '/../', 'node_modules')))
 
 app.use('/api/posts', require('./routes/posts'))
 app.use('/api/posts', require('./routes/comments'))
 
+// to serve index.html file, needs to be below any API calls
 app.use('*', function(req, res, next) {
   res.sendFile('index.html', {root: path.join(__dirname, 'public')})
 })

@@ -5,42 +5,19 @@
     templateUrl: 'posts/postListTemplate.html'
   })
 
-function controller() {
+// controller.$inject = ['$http'];
+function controller($http) {
   const vm = this;
 
   vm.$onInit = function () {
     vm.newPostFormDisplay = false;
-    vm.propertyName = 'score';
+    vm.propertyName = 'vote_count';
     vm.reverse = true;
-    vm.posts = [
-      {
-        title: 'this is a guy with a beard',
-        body: 'what is with all the beards?',
-        author: 'bondy',
-        imageUrl: 'https://static.pexels.com/photos/211050/pexels-photo-211050.jpeg',
-        score: 0,
-        date: new Date(2017, 10, 1, 9, 10, 20, 30),
-        comments: [{body: 'Firsties!'}, {body: 'I did it for the lulz'}]
-      },
-      {
-        title: 'more beards',
-        body: 'srsly?',
-        author: 'russ',
-        imageUrl: 'https://static.pexels.com/photos/69212/pexels-photo-69212.jpeg',
-        score: 0,
-        date: new Date(2017, 10, 2, 9, 20, 20, 30),
-        comments: []
-        // comments: [{body: 'so fly!'}, {body: 'what a goon'}]
-      },{
-        title: 'not trying at all',
-        body: "she's so... uniqiue",
-        author: 'ryan',
-        imageUrl: 'https://static.pexels.com/photos/192440/pexels-photo-192440.jpeg',
-        score: 0,
-        date: new Date(2017, 10, 2, 16, 23, 40, 30),
-        comments: [{body: 'i bet she liked stuff before it was cool'}]
-      }
-    ];
+
+    $http.get('/api/posts').then(function(response) {
+      vm.posts = response.data;
+      console.log(vm.posts);
+    });
   }
 
   vm.toggleNewPostForm = function() {
@@ -49,8 +26,8 @@ function controller() {
 
   vm.createPost = function (e) {
     e.preventDefault();
-    vm.newPost.score = 0;
-    vm.newPost.date = new Date();
+    vm.newPost.vote_count = 0;
+    vm.newPost.created_at = new Date();
     vm.newPost.showComments = false;
     vm.posts.push(vm.newPost);
     delete vm.newPost;
@@ -63,11 +40,11 @@ function controller() {
   }
 
   vm.upvotePost = function (post) {
-    post.score += 1;
+    post.vote_count += 1;
   }
 
   vm.downvotePost = function (post) {
-    if (post.score > 0) post.score -= 1;
+    if (post.vote_count > 0) post.vote_count -= 1;
   }
 
   vm.sortBy = function(e, propertyName) {
@@ -79,9 +56,10 @@ function controller() {
   vm.createComment = function (e, post, newComment, newCommentForm) {
     e.preventDefault();
     post.comments.push({
-      body: newComment.body
+      content: newComment.content,
+      post_id: post.id
     });
-    newComment.body = "";
+    newComment.content = "";
     newCommentForm.$setPristine();
   }
 
