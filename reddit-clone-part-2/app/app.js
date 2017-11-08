@@ -8,6 +8,8 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'))
 }
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 // to keep node_modules from being public

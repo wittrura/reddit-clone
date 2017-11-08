@@ -26,18 +26,25 @@ function controller($http) {
 
   vm.createPost = function (e) {
     e.preventDefault();
-    vm.newPost.vote_count = 0;
-    vm.newPost.created_at = new Date();
-    vm.newPost.comments = [];
-    vm.newPost.showComments = false;
-    vm.posts.push(vm.newPost);
-    delete vm.newPost;
-    vm.newPostForm.$setPristine();
+
+    $http.post('/api/posts', vm.newPost).then(function (response) {
+        // created_at added, vote_count initialized to 0 by postgres
+        response.data.comments = [];
+        response.data.showComments = false;
+        // update viewmodel without needing to make another api call
+        vm.posts.push(response.data);
+        delete vm.newPost;
+        
+        vm.newPostForm.$setPristine();
+        vm.newPostFormDisplay = !vm.newPostFormDisplay;
+    });
   }
 
   vm.deletePost = function (e, post) {
     e.preventDefault();
-    vm.posts.splice(vm.posts.indexOf(post), 1);
+    $http.delete(`/api/posts/${post.id}`).then(function (response) {
+      vm.posts.splice(vm.posts.indexOf(post), 1);
+    });
   }
 
   vm.upvotePost = function (post) {

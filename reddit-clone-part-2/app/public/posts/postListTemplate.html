@@ -99,13 +99,14 @@
           <img class="media-object" ng-src="{{post.image_url}}" style="height: 140px" alt="...">
           <!-- </a> -->
         </div>
+
         <div class="media-body">
-          <h4 class="media-heading">{{post.title}} |
+          <h4 class="media-heading">{{post.title}} | {{post.author}} |
             <a ng-click="$ctrl.upvotePost(post)"><i class="glyphicon glyphicon-arrow-up"></i></a>
             <a ng-click="$ctrl.downvotePost(post)"><i class="glyphicon glyphicon-arrow-down"></i></a>
-             {{post.vote_count}}
+            <span>{{post.vote_count}}</span>
+            <a class="pull-right" ng-click="$ctrl.deletePost($event, post)"><i class="glyphicon glyphicon-remove-circle"></i></a>
           </h4>
-          <div class="text-right">{{post.author}}</div>
           <p>{{post.body}}</p>
           <div>
             <span am-time-ago="post.created_at"></span> |
@@ -147,7 +148,6 @@
               </form>
               <!-- /newComment -->
           </div>
-
         </div>
       </div>
     </div>
