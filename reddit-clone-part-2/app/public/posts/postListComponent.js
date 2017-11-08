@@ -67,14 +67,18 @@ function controller($http) {
     vm.propertyName = propertyName;
   };
 
-  vm.createComment = function (e, post, newComment, newCommentForm) {
+  vm.createComment = function (e, post, comment, newCommentForm) {
     e.preventDefault();
-    post.comments.push({
-      content: newComment.content,
+    let newComment = {
+      content: comment.content,
       post_id: post.id
-    });
-    newComment.content = "";
-    newCommentForm.$setPristine();
+    }
+    
+    $http.post(`/api/posts/${post.id}/comments`, newComment).then(function (response) {
+      post.comments.push(response.data);
+      newComment.content = "";
+      newCommentForm.$setPristine();
+    })
   }
 
   vm.toggleComments = function(toggledPost) {
