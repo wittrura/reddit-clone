@@ -28,6 +28,7 @@ function controller($http) {
     e.preventDefault();
     vm.newPost.vote_count = 0;
     vm.newPost.created_at = new Date();
+    vm.newPost.comments = [];
     vm.newPost.showComments = false;
     vm.posts.push(vm.newPost);
     delete vm.newPost;
