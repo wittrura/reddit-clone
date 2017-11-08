@@ -34,7 +34,7 @@ function controller($http) {
         // update viewmodel without needing to make another api call
         vm.posts.push(response.data);
         delete vm.newPost;
-        
+
         vm.newPostForm.$setPristine();
         vm.newPostFormDisplay = !vm.newPostFormDisplay;
     });
@@ -48,11 +48,17 @@ function controller($http) {
   }
 
   vm.upvotePost = function (post) {
-    post.vote_count += 1;
+    $http.post(`/api/posts/${post.id}/votes`).then(function (response) {
+      post.vote_count += 1;
+    });
   }
 
   vm.downvotePost = function (post) {
-    if (post.vote_count > 0) post.vote_count -= 1;
+    if (post.vote_count > 0) {
+      $http.delete(`/api/posts/${post.id}/votes`).then(function (response) {
+        post.vote_count -= 1;
+      });
+    }
   }
 
   vm.sortBy = function(e, propertyName) {
