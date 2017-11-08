@@ -1,6 +1,6 @@
 (function() {
   angular.module('app')
-  .component('app', {
+  .component('postsList', {
     controller: controller,
     templateUrl: 'posts/postListTemplate.html'
   })

@@ -1,0 +1,63 @@
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ui-sref="postsList">Reddit Clone</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
+  </div>
+</nav>
+
+<main class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <form class="form" novalidate name="$ctrl.editPostForm" ng-submit="$ctrl.createPost($event)">
+        <div class="form-group" ng-class="{
+          'has-error' : $ctrl.editPostForm.title.$invalid && $ctrl.editPostForm.title.$dirty,
+          'has-success' : $ctrl.editPostForm.title.$valid
+        }">
+          <label class="control-label" for="title">Title</label>
+          <input required class="form-control" type="text" name='title' ng-model="$ctrl.editPost.title">
+          <p ng-show="$ctrl.editPostForm.title.$error.required && $ctrl.editPostForm.title.$dirty">Your username is required.</p>
+        </div>
+
+        <div class="form-group" ng-class="{
+          'has-error' : $ctrl.editPostForm.body.$invalid && $ctrl.editPostForm.body.$dirty,
+          'has-success' : $ctrl.editPostForm.body.$valid
+        }">
+          <label class="control-label" for="body">Body</label>
+          <textarea class="form-control" name='body' ng-model="$ctrl.editPost.body" required></textarea>
+          <p ng-show="$ctrl.editPostForm.body.$error.required && $ctrl.editPostForm.body.$dirty">Please enter body text for the new post.</p>
+        </div>
+
+        <div class="form-group" ng-class="{
+          'has-error' : $ctrl.editPostForm.author.$invalid && $ctrl.editPostForm.author.$dirty,
+          'has-success' : $ctrl.editPostForm.author.$valid
+        }">
+          <label class="control-label" for="author">Author</label>
+          <input class="form-control" type="text" name='author' ng-model="$ctrl.editPost.author" required>
+          <p ng-show="$ctrl.editPostForm.author.$error.required && $ctrl.editPostForm.author.$dirty">Please enter an author name for the new post.</p>
+        </div>
+
+        <div class="form-group" ng-class="{
+          'has-error' : $ctrl.editPostForm.image_url.$invalid && $ctrl.editPostForm.image_url.$dirty,
+          'has-success' : $ctrl.editPostForm.image_url.$valid
+        }">
+          <label class="control-label" for="image_url">Image URL</label>
+          <input class="form-control" type="text" name='image_url' ng-model="$ctrl.editPost.image_url" required>
+          <p ng-show="$ctrl.editPostForm.image_url.$error.required && $ctrl.editPostForm.image_url.$dirty">Please enter an author name for the new post.</p>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" ng-disabled="$ctrl.editPostForm.$invalid">Edit Post</button>
+          <button type="button" ng-click="" class="btn btn-danger">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
