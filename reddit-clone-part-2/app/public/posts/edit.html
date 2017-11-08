@@ -16,7 +16,7 @@
 <main class="container">
   <div class="row">
     <div class="col-md-8">
-      <form class="form" novalidate name="$ctrl.editPostForm" ng-submit="$ctrl.createPost($event)">
+      <form class="form" novalidate name="$ctrl.editPostForm" ng-submit="$ctrl.editPost()">
         <div class="form-group" ng-class="{
           'has-error' : $ctrl.editPostForm.title.$invalid && $ctrl.editPostForm.title.$dirty,
           'has-success' : $ctrl.editPostForm.title.$valid

@@ -14,6 +14,12 @@
         vm.postToEdit = response.data;
         console.log(vm.postToEdit);
       });
+    };
+
+    vm.editPost = function() {
+      // send PATCH to server
+      // redirect to posts / list page
+      return null;
     }
   }
 }());

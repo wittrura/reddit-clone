@@ -94,10 +94,11 @@
   <div class="row" ng-repeat="post in $ctrl.posts | orderBy:$ctrl.propertyName:$ctrl.reverse | filter:$ctrl.searchText">
     <div class="col-md-12">
       <div class="media well">
-        <div class="media-left">
+        <div class="media-left text-center">
           <!-- <a href="#"> -->
           <img class="media-object" ng-src="{{post.image_url}}" style="height: 140px" alt="...">
           <!-- </a> -->
+          <a ui-sref="postEdit({ postId: post.id })">Edit</a>
         </div>
 
         <div class="media-body">
