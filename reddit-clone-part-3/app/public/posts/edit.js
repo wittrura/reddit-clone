@@ -5,24 +5,23 @@
     templateUrl: 'posts/edit.html'
   });
 
-  function controller($state, $http) {
+  function controller($state, postsService) {
     const vm = this
 
     vm.$onInit = function () {
       const postId = $state.params.postId;
-      $http.get(`/api/posts/${postId}`).then(function(response) {
-        vm.postToEdit = response.data;
-        vm.post = response.data;
-      });
+      postsService.getPost(postId).then(post => {
+        vm.postToEdit = post;
+        vm.post = post;
+      })
     };
 
     vm.editPost = function() {
-      // send PATCH to server
       const postId = $state.params.postId;
-      $http.patch(`/api/posts/${postId}`, vm.post).then(function(response) {
+      postsService.editPost(postId, vm.post).then(() => {
         delete vm.post;
         $state.go('postsList')
-      });
+      })
     }
   }
 }());

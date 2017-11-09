@@ -23,22 +23,44 @@
       });
     };
 
+    this.getPost = function(postId) {
+      return $http.get(`/api/posts/${postId}`).then(response => {
+        const post = response.data;
+        return post;
+      });
+    }
+
+    this.editPost = function(postId, editedPost) {
+      return $http.patch(`/api/posts/${postId}`, editedPost).then(() => {
+        return;
+      });
+    }
+
     this.destroyPost = function(postId) {
-      return $http.delete(`/api/posts/${postId}`).then(response => {
+      return $http.delete(`/api/posts/${postId}`).then(() => {
         return;
       });
     };
 
     this.upvotePost = function(postId) {
-      return $http.post(`/api/posts/${postId}/votes`).then(response => {
+      return $http.post(`/api/posts/${postId}/votes`).then(() => {
         return;
       });
     };
 
     this.downvotePost = function(postId) {
-      return $http.delete(`/api/posts/${postId}/votes`).then(response => {
+      return $http.delete(`/api/posts/${postId}/votes`).then(() => {
         return;
       });
+    }
+
+
+
+    this.createComment = function(postId, newComment) {
+      return $http.post(`/api/posts/${postId}/comments`, newComment).then(response => {
+        const newComment = response.data;
+        return newComment;
+      })
     }
 
   }

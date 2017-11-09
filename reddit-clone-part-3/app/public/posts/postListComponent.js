@@ -5,7 +5,7 @@
     templateUrl: 'posts/postListTemplate.html'
   })
 
-function controller($http, postsService) {
+function controller(postsService) {
   const vm = this;
 
   vm.$onInit = function () {
@@ -63,13 +63,14 @@ function controller($http, postsService) {
 
   vm.createComment = function (e, post, comment, newCommentForm) {
     e.preventDefault();
+
     let newComment = {
       content: comment.content,
       post_id: post.id
     }
 
-    $http.post(`/api/posts/${post.id}/comments`, newComment).then(function (response) {
-      post.comments.push(response.data);
+    postsService.createComment(post.id, newComment).then(response => {
+      post.comments.push(response);
       newComment.content = "";
       newCommentForm.$setPristine();
     })
