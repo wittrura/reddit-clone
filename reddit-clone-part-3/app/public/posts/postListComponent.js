@@ -36,22 +36,22 @@ function controller($http, postsService) {
 
   vm.deletePost = function (e, post) {
     e.preventDefault();
-    $http.delete(`/api/posts/${post.id}`).then(function (response) {
+    postsService.destroyPost(post.id).then(() => {
       vm.posts.splice(vm.posts.indexOf(post), 1);
-    });
+    })
   }
 
   vm.upvotePost = function (post) {
-    $http.post(`/api/posts/${post.id}/votes`).then(function (response) {
+    postsService.upvotePost(post.id).then(() => {
       post.vote_count += 1;
-    });
+    })
   }
 
   vm.downvotePost = function (post) {
     if (post.vote_count > 0) {
-      $http.delete(`/api/posts/${post.id}/votes`).then(function (response) {
+      postsService.downvotePost(post.id).then(() => {
         post.vote_count -= 1;
-      });
+      })
     }
   }
 
