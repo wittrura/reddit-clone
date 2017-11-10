@@ -91,13 +91,12 @@
   <!-- /new post form -->
 
   <!-- posts -->
+  <!-- <post ng-repeat="post in $ctrl.posts | orderBy:$ctrl.propertyName:$ctrl.reverse | filter:$ctrl.searchText"></post> -->
   <div class="row" ng-repeat="post in $ctrl.posts | orderBy:$ctrl.propertyName:$ctrl.reverse | filter:$ctrl.searchText">
     <div class="col-md-12">
       <div class="media well">
         <div class="media-left text-center">
-          <!-- <a href="#"> -->
           <img class="media-object" ng-src="{{post.image_url}}" style="height: 140px" alt="...">
-          <!-- </a> -->
           <a ui-sref="postEdit({ postId: post.id })">Edit</a>
         </div>
 
@@ -112,8 +111,6 @@
           <div>
             <span am-time-ago="post.created_at"></span> |
             <i class="glyphicon glyphicon-comment"></i>
-            <!-- showComments is bound to current post -->
-            <!-- <a ng-click="showComments=!showComments"> -->
             <a ng-click="$ctrl.toggleComments(post)">
               <ng-pluralize
               count="post.comments.length"
@@ -122,8 +119,7 @@
               </ng-pluralize>
             </a>
           </div>
-
-          <comment ng-if="post.showComments" post="post"></comment>
+          <comment ng-if="post.showComments" post="post" on-update="$ctrl.addComment(comment, post)"></comment>
         </div>
       </div>
     </div>

@@ -55,12 +55,6 @@ function controller(PostService) {
     }
   }
 
-  vm.sortBy = function(e, propertyName) {
-    e.preventDefault();
-    // vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
-    vm.propertyName = propertyName;
-  };
-
   vm.toggleComments = function(toggledPost) {
     vm.posts.forEach(post => {
       if(post.title === toggledPost.title) {
@@ -69,6 +63,16 @@ function controller(PostService) {
         post.showComments = false;
       }
     })
+  }
+  vm.sortBy = function(e, propertyName) {
+    e.preventDefault();
+    // vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+    vm.propertyName = propertyName;
+  };
+
+
+  vm.addComment = function(comment, post) {
+    post.comments.push(comment);
   }
 };
 
