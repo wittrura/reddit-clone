@@ -10,7 +10,7 @@
 
     vm.$onInit = function () {
       const postId = $state.params.postId;
-      postsService.getPost(postId).then(post => {
+      PostService.getPost(postId).then(post => {
         vm.postToEdit = post;
         vm.post = post;
       })
@@ -18,7 +18,7 @@
 
     vm.editPost = function() {
       const postId = $state.params.postId;
-      postsService.editPost(postId, vm.post).then(() => {
+      PostService.editPost(postId, vm.post).then(() => {
         delete vm.post;
         $state.go('postsList')
       })

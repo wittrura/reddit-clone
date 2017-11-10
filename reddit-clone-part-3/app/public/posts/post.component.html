@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="media well">
+      <div class="media-left text-center">
+        <!-- <a href="#"> -->
+        <img class="media-object" ng-src="{{$ctrl.post.image_url}}" style="height: 140px" alt="...">
+        <!-- </a> -->
+        <a ui-sref="postEdit({ postId: $ctrl.post.id })">Edit</a>
+      </div>
+
+      <div class="media-body">
+        <h4 class="media-heading">{{$ctrl.post.title}} | {{$ctrl.post.author}} |
+          <a ng-click="$ctrl.upvotePost()"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a ng-click="$ctrl.downvotePost()"><i class="glyphicon glyphicon-arrow-down"></i></a>
+          <span>{{$ctrl.post.vote_count}}</span>
+          <a class="pull-right" ng-click="$ctrl.deletePost($event)"><i class="glyphicon glyphicon-remove-circle"></i></a>
+        </h4>
+        <p>{{$ctrl.post.body}}</p>
+        <div>
+          <span am-time-ago="$ctrl.post.created_at"></span> |
+          <i class="glyphicon glyphicon-comment"></i>
+          <!-- showComments is bound to current post -->
+          <!-- <a ng-click="showComments=!showComments"> -->
+          <a ng-click="$ctrl.toggleComments(post)">
+            <ng-pluralize
+            count="$ctrl.post.comments.length"
+            when="{'1': '1 comment',
+               'other': '{} comments'}">
+            </ng-pluralize>
+          </a>
+        </div>
+
+        <comment ng-if="post.showComments" post="post" on-update="$ctrl.addComment(comment, post)"></comment>
+      </div>
+    </div>
+  </div>
+</div>

@@ -64,17 +64,16 @@ function controller(PostService) {
       }
     })
   }
+
+  vm.addComment = function(comment, post) {
+    post.comments.push(comment);
+  }
+
   vm.sortBy = function(e, propertyName) {
     e.preventDefault();
     // vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
     vm.propertyName = propertyName;
   };
 
-
-  vm.addComment = function(comment, post) {
-    post.comments.push(comment);
-  }
 };
-
-
 }());
