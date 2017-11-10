@@ -92,7 +92,7 @@
 
   <!-- posts -->
   <div ng-repeat="post in $ctrl.posts | orderBy:$ctrl.propertyName:$ctrl.reverse | filter:$ctrl.searchText">
-    <post post="post"></post>
+    <post post="post" on-delete="$ctrl.deletePost(post)" on-update="$ctrl.updatePost(post, prop, val)"></post>
   </div>
   <!-- /posts -->
 

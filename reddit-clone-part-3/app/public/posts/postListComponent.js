@@ -34,18 +34,15 @@ function controller(PostService) {
     })
   }
 
-  vm.deletePost = function (e, post) {
-    e.preventDefault();
-    PostService.destroyPost(post.id).then(() => {
-      vm.posts.splice(vm.posts.indexOf(post), 1);
-    })
+  // received from child comment component
+  vm.deletePost = function (post) {
+    vm.posts.splice(vm.posts.indexOf(post), 1);
   }
 
-  vm.upvotePost = function (post) {
-    PostService.upvotePost(post.id).then(() => {
-      post.vote_count += 1;
-    })
+  vm.updatePost = function (post, prop, val) {
+    post[prop] = val;
   }
+
 
   vm.downvotePost = function (post) {
     if (post.vote_count > 0) {
