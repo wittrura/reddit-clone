@@ -1,10 +1,9 @@
 (function() {
   angular
     .module('app')
-    .service('postsService', service);
+    .service('PostService', service);
 
   function service($http) {
-
     this.getPosts = function() {
       return $http.get('/api/posts').then(response => {
         const posts = response.data;
@@ -52,15 +51,6 @@
       return $http.delete(`/api/posts/${postId}/votes`).then(() => {
         return;
       });
-    }
-
-
-
-    this.createComment = function(postId, newComment) {
-      return $http.post(`/api/posts/${postId}/comments`, newComment).then(response => {
-        const newComment = response.data;
-        return newComment;
-      })
     }
 
   }

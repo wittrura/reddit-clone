@@ -5,7 +5,7 @@
     templateUrl: 'posts/edit.html'
   });
 
-  function controller($state, postsService) {
+  function controller($state, PostService) {
     const vm = this
 
     vm.$onInit = function () {

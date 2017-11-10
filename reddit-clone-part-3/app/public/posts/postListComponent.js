@@ -5,7 +5,7 @@
     templateUrl: 'posts/postListTemplate.html'
   })
 
-function controller(postsService) {
+function controller(PostService) {
   const vm = this;
 
   vm.$onInit = function () {
@@ -13,7 +13,7 @@ function controller(postsService) {
     vm.propertyName = 'vote_count';
     vm.reverse = true;
 
-    postsService.getPosts().then(posts => vm.posts = posts);
+    PostService.getPosts().then(posts => vm.posts = posts);
   }
 
   vm.toggleNewPostForm = function() {
@@ -23,7 +23,7 @@ function controller(postsService) {
   vm.createPost = function (e) {
     e.preventDefault();
 
-    postsService.createPost(vm.newPost).then(newPost => {
+    PostService.createPost(vm.newPost).then(newPost => {
       // update viewmodel without needing to make another api call
       vm.posts.push(newPost);
 
@@ -36,20 +36,20 @@ function controller(postsService) {
 
   vm.deletePost = function (e, post) {
     e.preventDefault();
-    postsService.destroyPost(post.id).then(() => {
+    PostService.destroyPost(post.id).then(() => {
       vm.posts.splice(vm.posts.indexOf(post), 1);
     })
   }
 
   vm.upvotePost = function (post) {
-    postsService.upvotePost(post.id).then(() => {
+    PostService.upvotePost(post.id).then(() => {
       post.vote_count += 1;
     })
   }
 
   vm.downvotePost = function (post) {
     if (post.vote_count > 0) {
-      postsService.downvotePost(post.id).then(() => {
+      PostService.downvotePost(post.id).then(() => {
         post.vote_count -= 1;
       })
     }
@@ -61,23 +61,7 @@ function controller(postsService) {
     vm.propertyName = propertyName;
   };
 
-  vm.createComment = function (e, post, comment, newCommentForm) {
-    e.preventDefault();
-
-    let newComment = {
-      content: comment.content,
-      post_id: post.id
-    }
-
-    postsService.createComment(post.id, newComment).then(response => {
-      post.comments.push(response);
-      newComment.content = "";
-      newCommentForm.$setPristine();
-    })
-  }
-
   vm.toggleComments = function(toggledPost) {
-    // post.showComments = !post.showComments;
     vm.posts.forEach(post => {
       if(post.title === toggledPost.title) {
         post.showComments = !post.showComments;
