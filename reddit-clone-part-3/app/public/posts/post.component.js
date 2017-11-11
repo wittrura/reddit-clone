@@ -10,7 +10,7 @@
     templateUrl: 'posts/post.component.html'
   })
 
-function controller(PostService) {
+function controller(PostService, $scope) {
   const vm = this;
 
   vm.deletePost = function (e) {
@@ -36,21 +36,13 @@ function controller(PostService) {
     }
   }
 
-  vm.addComment = function(comment) {
-    vm.post.comments.push(comment);
-  }
+  $scope.$on('createComment', (event, args) => {
+    vm.post.comments.push(args.comment);
+  });
 
-  vm.toggleComments = function(toggledPost) {
-    console.log('toggle comments');
-    // delegate to parent for toggling comments
-
-    // vm.posts.forEach(post => {
-    //   if(post.title === toggledPost.title) {
-    //     post.showComments = !post.showComments;
-    //   } else {
-    //     post.showComments = false;
-    //   }
-    // })
+  vm.toggleComments = function() {
+    // emits event to be handled by parent component
+    $scope.$emit('toggleComments', {post: vm.post});
   }
 }
 }())

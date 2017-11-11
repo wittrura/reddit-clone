@@ -21,7 +21,7 @@
           <i class="glyphicon glyphicon-comment"></i>
           <!-- showComments is bound to current post -->
           <!-- <a ng-click="showComments=!showComments"> -->
-          <a ng-click="$ctrl.toggleComments(post)">
+          <a ng-click="$ctrl.toggleComments()">
             <ng-pluralize
             count="$ctrl.post.comments.length"
             when="{'1': '1 comment',
@@ -30,7 +30,7 @@
           </a>
         </div>
 
-        <comment ng-if="post.showComments" post="post" on-update="$ctrl.addComment(comment, post)"></comment>
+        <comment ng-if="$ctrl.post.showComments" post="$ctrl.post"></comment>
       </div>
     </div>
   </div>
