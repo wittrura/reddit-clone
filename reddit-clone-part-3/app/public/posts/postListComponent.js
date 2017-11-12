@@ -5,7 +5,7 @@
     templateUrl: 'posts/postListTemplate.html'
   })
 
-function controller(PostService, $scope) {
+function controller(PostService) {
   const vm = this;
 
   vm.$onInit = function () {
@@ -20,18 +20,10 @@ function controller(PostService, $scope) {
     vm.newPostFormDisplay = !vm.newPostFormDisplay;
   };
 
-  vm.createPost = function (e) {
-    e.preventDefault();
-
-    PostService.createPost(vm.newPost).then(newPost => {
-      // update viewmodel without needing to make another api call
-      vm.posts.push(newPost);
-
-      // clean form
-      delete vm.newPost;
-      vm.newPostForm.$setPristine();
-      vm.newPostFormDisplay = !vm.newPostFormDisplay;
-    })
+  // received from child postForm component
+  vm.createPost = function (newPost) {
+    vm.posts.push(newPost);
+    vm.toggleNewPostForm();
   };
 
   // received from child post component
@@ -44,15 +36,6 @@ function controller(PostService, $scope) {
     post[prop] = val;
   };
 
-  // $scope.$on('toggleComments', (event, args) => {
-  //   vm.posts.forEach(post => {
-  //     if(post.id === args.post.id) {
-  //       post.showComments = !post.showComments;
-  //     } else {
-  //       post.showComments = false;
-  //     }
-  //   });
-  // });
   vm.toggleComments = function (toggledPost) {
     vm.posts.forEach(post => {
       if(post.id === toggledPost.id) {
@@ -61,8 +44,7 @@ function controller(PostService, $scope) {
         post.showComments = false;
       }
     });
-  }
-
+  };
 
   vm.sortBy = function(e, propertyName) {
     e.preventDefault();
