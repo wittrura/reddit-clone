@@ -4,13 +4,14 @@
     bindings: {
       post: '<',
       onDelete: '&',
-      onUpdate: '&'
+      onUpdate: '&',
+      onToggleComments: '&',
     },
     controller: controller,
     templateUrl: 'posts/post.component.html'
   })
 
-function controller(PostService, $scope) {
+function controller(PostService) {
   const vm = this;
 
   vm.deletePost = function (e) {
@@ -36,13 +37,12 @@ function controller(PostService, $scope) {
     }
   }
 
-  $scope.$on('createComment', (event, args) => {
-    vm.post.comments.push(args.comment);
-  });
+  vm.createComment = function (comment) {
+    vm.post.comments.push(comment);
+  };
 
   vm.toggleComments = function() {
-    // emits event to be handled by parent component
-    $scope.$emit('toggleComments', {post: vm.post});
+    vm.onToggleComments({post: vm.post});
   }
 }
 }())

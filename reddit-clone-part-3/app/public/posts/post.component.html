@@ -30,7 +30,11 @@
           </a>
         </div>
 
-        <comment ng-if="$ctrl.post.showComments" post="$ctrl.post"></comment>
+        <comment
+          ng-if="$ctrl.post.showComments"
+          post="$ctrl.post"
+          on-create-comment="$ctrl.createComment(comment)">
+        </comment>
       </div>
     </div>
   </div>

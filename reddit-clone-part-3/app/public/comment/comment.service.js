@@ -9,7 +9,6 @@
         const newComment = response.data;
         return newComment;
       })
-    }
-
-  }
+    };
+  };
 })()

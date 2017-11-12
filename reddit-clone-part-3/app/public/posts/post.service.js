@@ -27,13 +27,13 @@
         const post = response.data;
         return post;
       });
-    }
+    };
 
     this.editPost = function(postId, editedPost) {
       return $http.patch(`/api/posts/${postId}`, editedPost).then(() => {
         return;
       });
-    }
+    };
 
     this.destroyPost = function(postId) {
       return $http.delete(`/api/posts/${postId}`).then(() => {
@@ -51,7 +51,7 @@
       return $http.delete(`/api/posts/${postId}/votes`).then(() => {
         return;
       });
-    }
+    };
 
-  }
+  };
 })()

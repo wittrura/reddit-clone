@@ -44,15 +44,25 @@ function controller(PostService, $scope) {
     post[prop] = val;
   };
 
-  $scope.$on('toggleComments', (event, args) => {
+  // $scope.$on('toggleComments', (event, args) => {
+  //   vm.posts.forEach(post => {
+  //     if(post.id === args.post.id) {
+  //       post.showComments = !post.showComments;
+  //     } else {
+  //       post.showComments = false;
+  //     }
+  //   });
+  // });
+  vm.toggleComments = function (toggledPost) {
     vm.posts.forEach(post => {
-      if(post.id === args.post.id) {
+      if(post.id === toggledPost.id) {
         post.showComments = !post.showComments;
       } else {
         post.showComments = false;
       }
     });
-  });
+  }
+
 
   vm.sortBy = function(e, propertyName) {
     e.preventDefault();
