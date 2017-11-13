@@ -2,7 +2,7 @@
   angular.module('app')
   .component('postsList', {
     controller: controller,
-    templateUrl: 'posts/postListTemplate.html'
+    templateUrl: 'posts/posts-list.template.html'
   })
 
 function controller(PostService) {

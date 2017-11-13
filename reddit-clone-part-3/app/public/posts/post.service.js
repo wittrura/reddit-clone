@@ -7,7 +7,6 @@
     this.getPosts = function() {
       return $http.get('/api/posts').then(response => {
         const posts = response.data;
-        console.log(response.data);
         return posts;
       });
     };

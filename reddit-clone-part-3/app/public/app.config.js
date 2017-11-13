@@ -19,7 +19,12 @@
       var postEdit = {
         name: 'postEdit',
         url: '/posts/{postId}/edit',
-        component: 'postEdit'
+        component: 'postEdit',
+        resolve: {
+          postToEdit: function(PostService, $stateParams) {
+            return PostService.getPost($stateParams.postId);
+          }
+        }
       };
 
       $stateProvider

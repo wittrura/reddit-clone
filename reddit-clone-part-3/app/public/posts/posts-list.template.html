@@ -30,7 +30,7 @@
   <!-- /search and filtering -->
 
   <!-- new post form -->
-  <post-form on-create-post="$ctrl.createPost(newPost)" ng-if="$ctrl.newPostFormDisplay"></post-form>
+  <post-form option="create" on-create-post="$ctrl.createPost(newPost)" ng-if="$ctrl.newPostFormDisplay"></post-form>
 
   <!-- posts -->
   <!-- TODO - can the repeat be in the <post> directive -->
