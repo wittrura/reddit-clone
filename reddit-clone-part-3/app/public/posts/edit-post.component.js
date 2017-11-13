@@ -2,7 +2,7 @@
   angular.module('app')
   .component('postEdit', {
     controller: controller,
-    templateUrl: 'posts/edit.html',
+    templateUrl: 'posts/edit-post.component.html',
     bindings: {
       postToEdit: '<'
     }
