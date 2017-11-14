@@ -7,7 +7,7 @@
       option: '@',
     },
     controller: controller,
-    templateUrl: 'posts/post-form.html'
+    templateUrl: 'javascripts/posts/post-form.html'
   })
 
   function controller(PostService, $state) {

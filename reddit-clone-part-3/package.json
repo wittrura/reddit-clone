@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "webdriver-manager update && sh ./setup.sh",
+    "postinstall": "sh ./setup.sh",
     "test-e2e": "NODE_ENV=test protractor test/e2e/conf.js",
     "test-server": "NODE_ENV=test mocha test/server",
     "test": "npm run test-server; npm run test-e2e",
-    "start": "gulp"
+    "start": "node ./server/bin/www"
   },
   "keywords": [],
   "author": "",

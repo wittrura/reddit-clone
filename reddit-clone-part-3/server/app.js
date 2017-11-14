@@ -11,16 +11,16 @@ if (process.env.NODE_ENV !== 'test') {
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '/../client')))
 // to keep node_modules from being public
-app.use(express.static(path.join(__dirname, '/../', 'node_modules')))
+app.use(express.static(path.join(__dirname, '/../node_modules')))
 
 app.use('/api/posts', require('./routes/posts'))
 app.use('/api/posts', require('./routes/comments'))
 
 // to serve index.html file, needs to be below any API calls
 app.use('*', function(req, res, next) {
-  res.sendFile('index.html', {root: path.join(__dirname, 'public')})
+  res.sendFile('index.html', {root: path.join(__dirname, '/../client')})
 })
 
 app.use(function(req, res, next) {

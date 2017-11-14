@@ -8,7 +8,7 @@
       onToggleComments: '&',
     },
     controller: controller,
-    templateUrl: 'posts/post.component.html'
+    templateUrl: 'javascripts/posts/post.component.html'
   })
 
 function controller(PostService) {

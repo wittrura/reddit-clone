@@ -6,7 +6,7 @@
       onCreateComment: '&'
     },
     controller: controller,
-    templateUrl: 'comment/comment.component.html'
+    templateUrl: 'javascripts/comment/comment.component.html'
   })
 
   function controller(CommentService) {
