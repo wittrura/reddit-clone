@@ -3,8 +3,9 @@ Demo social site to highlight the abilities of AngularJS (v1.6).
 ![posts list](./README/posts_list.png)
 
 Users can create, edit, and delete posts.
-<img src="./README/new_post.png" alt="Drawing" style="width: 45%; display: inline; margin: 0 5px;"/>
-<img src="./README/edit_post.png" alt="Drawing" style="width: 45%; display: inline; margin: 0 5px;"/>
+
+<img src="./README/new_post.png" alt="Drawing" style="width: 40%; display: inline; margin: 0 5px;"/>
+<img src="./README/edit_post.png" alt="Drawing" style="width: 40%; display: inline; margin: 0 5px;"/>
 
 Users can also vote or comment on existing posts similar to reddit.
 ![posts list](./README/comments.png)
